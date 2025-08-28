@@ -13,7 +13,8 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  /*removed the line below, because position: sticky crushes because of that*/
+  /* overflow-x: hidden; */
 }
 
 body {

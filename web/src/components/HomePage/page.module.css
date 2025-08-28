@@ -1,0 +1,99 @@
+@font-face {
+    font-family: Lora;
+    src: url("./Lora.ttf");
+}
+
+@font-face {
+    font-family: Inter;
+    src: url("./Inter.ttf");
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: rgb(23, 23, 23);
+}
+
+.intro{
+    display: flex;
+    gap: 50px;
+    padding: 115px 100px;
+}
+
+.intro_photo{
+    width: 600px;
+    height: 330px;
+}
+
+.intro_text{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.intro_text h1{
+    font-family: Lora;
+    font-size: 45px;
+    color: #171A1FFF;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.intro_text p{
+    font-family: Inter;
+    font-size: 18px;
+    color: #565D6DFF;
+}
+
+.button{
+    width: 155px;
+    height: 40px;
+    color: white;
+    background-color: #48A830FF;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.inputs{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 100px;
+}
+
+.search_bar{
+    width: 350px;
+    height: 40px;
+    font-family: Inter;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #DEE1E6FF;
+    padding-left: 34px;
+}
+
+.selections{
+    display: flex;
+    gap: 25px;
+}
+
+.selections select{
+    height: 40px;
+    width: 180px;
+    padding-left: 12px;
+    font-family: Inter;
+    font-size: 14px;
+    color: #171A1FFF;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #DEE1E6FF;
+}
+
+.catalog{
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 40px 100px;
+}
