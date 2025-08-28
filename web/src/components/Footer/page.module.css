@@ -1,0 +1,50 @@
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 144px;
+    height: 60px;
+    background-color: #48A830FF;
+}
+
+.footer div{
+    display: flex;
+    gap: 20px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    pointer-events: none;
+}
+
+.facebook_icon{
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    mask-image: url('/facebook_icon.svg');
+    pointer-events: none;
+}
+
+.twitter_icon{
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    mask-image: url('/twitter_icon.svg');
+    pointer-events: none;
+}
+
+.instagram_icon{
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    mask-image: url('/instagram_icon.svg');
+    pointer-events: none;
+}
+
+.linkedin_icon{
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    mask-image: url('/linkedin_icon.svg');
+    pointer-events: none;
+}
