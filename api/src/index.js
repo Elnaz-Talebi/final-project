@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use('/plants',plantsRouter)
+
 app.get("/", (_req, res) => {
   res.send("API is running...");
 });
@@ -31,6 +33,7 @@ app.get("/users", async (_req, res) => {
   }
 });
 
+/*
 app.get("/plants", async (_req, res) => {
   const db = (await import("./db_connection.js")).default;
   try {
@@ -41,24 +44,7 @@ app.get("/plants", async (_req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-app.get("/plants/:id", async (_req, res) => {
-  const db = (await import("./db_connection.js")).default;
-  try {
-    const plant = await db
-      .select("*")
-      .from("plants")
-      .where("id", _req.params.id)
-      .first();
-    if (!plant) {
-      res.status(404);
-    }
-    res.json(plant);
-  } catch (error) {
-    console.error("Error fetching plant:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+*/
 
 app.get("/reviews", async (_req, res) => {
   const db = (await import("./db_connection.js")).default;

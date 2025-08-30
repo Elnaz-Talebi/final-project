@@ -124,7 +124,25 @@ Potential areas for future development:
 
 ## 📝 Development Notes
 
-Will update here..
+
+### 🌿 API Endpoints
+
+#### 1. Get all plants
+**GET** `/plants`
+
+**Description:**  
+Returns a list of all plants in the database.
+
+
+#### 2. Get a plant by ID
+**GET** `/plants/:id`
+
+**Description:**  
+Fetch a single plant by its id.
+
+**Path Parameter:** 
+id (integer) → The plant ID
+
 
 ## 📄 License
 
