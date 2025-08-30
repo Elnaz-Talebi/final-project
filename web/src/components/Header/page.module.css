@@ -1,0 +1,89 @@
+/*the font for logo*/
+@font-face {
+    font-family: "logo";
+    src: url('Borel-Regular.ttf');
+}
+
+.header{
+    top: 0;
+    position: sticky;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f14;
+    background-color: white;
+    color: rgb(23 23 23);
+}
+
+.header_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.header_image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.nav{
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav a{
+    color: #565D6DFF;
+    text-decoration: none;
+}
+
+.nav a:hover{
+    color: #48A830FF; 
+    text-decoration: none;
+}
+
+.nav a.disabled{
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.header_container a.disabled{
+    pointer-events: none;
+}
+
+/*it's unused right now, but it should be here if we want to return search bar in header*/
+.header_search{
+    height: 36px;
+    width: 256px;
+    border-radius: 6px;
+    padding-left: 34px;
+    border-color: #DEE1E6FF;
+    background-color: white;
+    color: black;
+}
+
+.login_button{
+    width: 71px;
+    height: 40px;
+    border-radius: 6px;
+    border-color: #DEE1E6FF;
+    background-color: white;
+    color: black;
+}
+
+.logo_text{
+    margin-top: 13px;
+    font-size: 20px;
+    font-family: 'logo';
+    font-weight: bold;
+    color: #48A830FF;
+}
