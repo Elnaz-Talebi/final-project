@@ -217,7 +217,7 @@ Array of objects
 ]
 
 
-#### 4. Get limited top rating plants
+#### 4.  Get Paginated Plants
 
 **GET** `/plants`
 
