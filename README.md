@@ -151,8 +151,7 @@ Array of objects
 "plantDescription": "A striking plant with large, violin-shaped leaves, ideal for bright spaces.",
 "plantPrice": 45.50,
 "plantImage": "https://example.com/ficus.jpg",
-},
-...
+}
 ]
 
 #### 2. Get a plant by ID
@@ -212,12 +211,10 @@ Array of objects
 "plantDescription": "A striking plant with large, violin-shaped leaves, ideal for bright spaces.",
 "plantPrice": 45.50,
 "plantImage": "https://example.com/ficus.jpg",
-},
-...
+}
 ]
 
-
-#### 4.  Get Paginated Plants
+#### 4. Get Paginated Plants
 
 **GET** `/plants`
 
@@ -248,9 +245,60 @@ Array of objects
 "plantDescription": "A striking plant with large, violin-shaped leaves, ideal for bright spaces.",
 "plantPrice": 45.50,
 "plantImage": "https://example.com/ficus.jpg",
-},
-...
+}
 ]
+
+
+#### 5. Get a plant care instructions by plant ID
+
+**GET** `/plantCare/:plantId`
+
+**Description:**  
+Fetch plant care instructions by plant id.
+
+**Path Parameter:**
+plantId (integer) → The plant ID
+
+**response structure:**
+Single object
+
+**response example:**
+{
+  "plantCareId": 1,
+  "plantId": 1,
+  "waterSchedule": "Water once a week, allow topsoil to dry",
+  "sunlightExposure": "Bright, indirect sunlight",
+  "humidityAndTemperature": "High humidity | 18–24°C",
+  "soilAndFertilizer": "Well-draining potting soil | Fertilize monthly in spring and summer",
+  "createdAt": "2025-09-02T16:40:43.559Z",
+  "updatedAt": "2025-09-02T16:40:43.559Z"
+}
+
+
+#### 6. Get a plant specification by plant ID
+
+**GET** `/plantSpecification/:plantId`
+
+**Description:**  
+Fetch plant specification by plant id.
+
+**Path Parameter:**
+plantId (integer) → The plant ID
+
+**response structure:**
+Single object
+
+**response example:**
+{
+  "plantSpecificationId": 1,
+  "plantId": 1,
+  "scientificName": "Ficus lyrata",
+  "family": "Moraceae",
+  "origin": "Native to Western Africa, commonly grown as a houseplant for its large, decorative leaves",
+  "createdAt": "2025-09-02T16:44:46.730Z",
+  "updatedAt": "2025-09-02T16:44:46.730Z"
+}
+
 
 ## 📄 License
 
