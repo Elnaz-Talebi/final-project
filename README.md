@@ -124,7 +124,133 @@ Potential areas for future development:
 
 ## 📝 Development Notes
 
-Will update here..
+### 🌿 API Endpoints
+
+#### 1. Get all plants
+
+**GET** `/plants/all`
+
+**Description:**  
+Returns a list of all plants card (only main data to show in a card).
+
+**response structure:**
+Array of objects
+
+**response example:**
+[
+{
+"plantId": 1,
+"plantName": "Monstera Deliciosa",
+"plantDescription": "A tropical plant with large, split leaves, perfect for indoor spaces.",
+"plantPrice": 29.99,
+"plantImage": "https://example.com/monstera.jpg",
+},
+{
+"plantId": 2,
+"plantName": "Ficus Lyrata",
+"plantDescription": "A striking plant with large, violin-shaped leaves, ideal for bright spaces.",
+"plantPrice": 45.50,
+"plantImage": "https://example.com/ficus.jpg",
+},
+...
+]
+
+#### 2. Get a plant by ID
+
+**GET** `/plants/:id`
+
+**Description:**  
+Fetch a single plant by its id.
+
+**Path Parameter:**
+id (integer) → The plant ID
+
+**response structure:**
+Single object
+
+**response example:**
+
+{
+"plantId": 1,
+"plantName": "Monstera Deliciosa",
+"plantDescription": "A tropical plant with large, split leaves, perfect for indoor spaces.",
+"plantPrice": 29.99,
+"plantImage": "https://example.com/monstera.jpg",
+"plantCategory": "Indoor",
+"plantTags": ["low-light", "pet-safe"],
+"careInstructions": "Water every 1-2 weeks, keep in indirect sunlight.",
+"averageRating": 4.5,
+"createdAt": "2025-09-01T12:00:00Z",
+"updatedAt": "2025-09-01T12:00:00Z"
+}
+
+#### 3. Get limited top rating plants
+
+**GET** `/plants/limited-top-rating/:limit`
+
+**Description:**  
+Fetch limited top rating plants.
+
+**Path Parameter:**
+limit (integer) → How many top rate plants
+
+**response structure:**
+Array of objects
+
+**response example:**
+[
+{
+"plantId": 1,
+"plantName": "Monstera Deliciosa",
+"plantDescription": "A tropical plant with large, split leaves, perfect for indoor spaces.",
+"plantPrice": 29.99,
+"plantImage": "https://example.com/monstera.jpg",
+},
+{
+"plantId": 2,
+"plantName": "Ficus Lyrata",
+"plantDescription": "A striking plant with large, violin-shaped leaves, ideal for bright spaces.",
+"plantPrice": 45.50,
+"plantImage": "https://example.com/ficus.jpg",
+},
+...
+]
+
+
+#### 4.  Get Paginated Plants
+
+**GET** `/plants`
+
+**Description:**  
+Fetch a paginated list of plants.
+
+**Query Parameters::**
+page (number, optional, default = 1) → Which page of results to return.
+pageSize (number, optional, default = 10, max = 50) → How many plants per page.
+
+Example: GET /plants?page=2&pageSize=10 → returns plants 11–20
+
+**response structure:**
+Array of objects
+
+**response example:**
+[
+{
+"plantId": 1,
+"plantName": "Monstera Deliciosa",
+"plantDescription": "A tropical plant with large, split leaves, perfect for indoor spaces.",
+"plantPrice": 29.99,
+"plantImage": "https://example.com/monstera.jpg",
+},
+{
+"plantId": 2,
+"plantName": "Ficus Lyrata",
+"plantDescription": "A striking plant with large, violin-shaped leaves, ideal for bright spaces.",
+"plantPrice": 45.50,
+"plantImage": "https://example.com/ficus.jpg",
+},
+...
+]
 
 ## 📄 License
 
