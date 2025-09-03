@@ -50,7 +50,9 @@ export default function PlantsPage() {
               id={plant.plantId}
               name={plant.plantName}
               description={plant.plantDescription}
-              price={plant.plantPrice}
+              price={`${Number(plant.plantPrice)
+                .toFixed(2)
+                .replace(".", ",")} `}
               imageUrl={plant.plantImage}
               averageRating={0}
             />
