@@ -10,28 +10,53 @@ export default function PlantsPage() {
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     async function fetchPlants() {
+      setLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/plants`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/plants?page=${page}&pageSize=${pageSize}`
+        );
+
         if (!res.ok) {
           setError({ message: `Failed to fetch plants: ${res.status}` });
           setPlants([]);
           return;
         }
+
         const data = await res.json();
-        setPlants(Array.isArray(data.plants) ? data.plants : []);
+        console.log("API response:", data);
+
+        if (Array.isArray(data.plants)) {
+          setPlants(data.plants);
+          setHasMore(data.plants.length === pageSize);
+        } else {
+          setPlants([]);
+          setHasMore(false);
+        }
       } catch (err) {
         setError({ message: `Could not load plants: ${err}` });
         setPlants([]);
+        setHasMore(false);
       } finally {
         setLoading(false);
       }
     }
 
     fetchPlants();
-  }, []);
+  }, [page, pageSize]);
+
+  const handleNext = () => {
+    if (hasMore) setPage(page + 1);
+  };
+
+  const handlePrevious = () => {
+    if (page > 1) setPage(page - 1);
+  };
 
   return (
     <div className={styles.plant_page}>
@@ -57,6 +82,25 @@ export default function PlantsPage() {
               averageRating={0}
             />
           ))}
+      </div>
+
+      {/* Pagination controls */}
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={handlePrevious}
+          disabled={page === 1}
+          style={{ marginRight: "10px" }}
+        >
+          Previous
+        </button>
+        <span>Page {page}</span>
+        <button
+          onClick={handleNext}
+          disabled={!hasMore}
+          style={{ marginLeft: "10px" }}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
