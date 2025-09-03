@@ -1,0 +1,63 @@
+@font-face {
+  font-family: Lora;
+  src: url("/Lora.ttf");
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("/Inter.ttf");
+}
+
+.plant_page {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color: rgb(23, 23, 23);
+  padding: 50px 100px;
+  font-family: Inter, sans-serif;
+}
+
+.plant_page h1 {
+  font-family: Lora, serif;
+  font-size: 45px;
+  color: #171a1fff;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.plant_grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: flex-start;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.loading_wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+/* Optional responsive adjustments */
+@media (max-width: 1200px) {
+  .plant_page {
+    padding: 50px 50px;
+  }
+  .plant_grid {
+    gap: 20px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .plant_page h1 {
+    font-size: 36px;
+  }
+}
