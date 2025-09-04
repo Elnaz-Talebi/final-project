@@ -3,8 +3,6 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import plantsRouter from "./routers/plants.js";
-import plantCareRouter from "./routers/plantCare.js";
-import plantSpecificationRouter from "./routers/plantSpecification.js";
 import reviewsRouter from "./routers/reviews.js";
 import usersRouter from "./routers/users.js";
 
