@@ -1,1 +1,0 @@
- // All plants page → "/plants"
