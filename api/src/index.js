@@ -15,8 +15,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/plants", plantsRouter);
-app.use("/plantCare", plantCareRouter);
-app.use("/plantSpecification", plantSpecificationRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/users", usersRouter);
 
