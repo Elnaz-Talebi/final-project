@@ -54,7 +54,7 @@ export default function Page() {
     <>
       <PlantInfo plant={plant} />
       <PlantSpecifications />
-      <PlantCareInstructions />
+      <PlantCareInstructions plantId={plantId} />
     </>
   );
 }

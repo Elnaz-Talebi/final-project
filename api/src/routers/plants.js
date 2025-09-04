@@ -4,6 +4,7 @@ import {
   getLimitedTopRatePlantsCard,
   getPlantsCardPage,
   getPlantById,
+  getPlantCareInstructions,
 } from "../controllers/plantController.js";
 
 const plantsRouter = express.Router();
@@ -13,6 +14,9 @@ plantsRouter.get("/all", getAllPlantsCard);
 
 // GET plant by id (plant with details)
 plantsRouter.get("/:id", getPlantById);
+
+// GET plant care instructions by id
+plantsRouter.get("/:id/care-instructions", getPlantCareInstructions);
 
 // GET limit top rating plants card
 plantsRouter.get("/limited-top-rating/:limit", getLimitedTopRatePlantsCard);

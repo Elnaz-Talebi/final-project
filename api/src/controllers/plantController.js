@@ -2,6 +2,7 @@ import db from "../db_connection.js";
 import { buildPlantCardDto } from "../dtos/buildPlantCardDto.js";
 import { buildPlantDetailDto } from "../dtos/buildPlantDetailDto.js";
 import { checkPageQueryValidation } from "../utils/checkPageQueryValidation.js";
+import { buildPlantCareInstructionsDto } from "../dtos/buildPlantCareInstructionsDto.js";
 
 export const getAllPlantsCard = async (req, res) => {
   try {
@@ -38,6 +39,32 @@ export const getPlantById = async (req, res) => {
     res.json(plant);
   } catch (err) {
     console.error("Error fetching plants:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getPlantCareInstructions = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (!id || isNaN(id) || id < 1) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
+
+    const result = await db("plant_care_instructions")
+      .select("*")
+      .where({ plant_id: id })
+      .first();
+
+    if (!result) {
+      return res
+        .status(404)
+        .json({ message: "No plant care instructions found" });
+    }
+
+    const plantCareInstructions = buildPlantCareInstructionsDto(result);
+    res.json(plantCareInstructions);
+  } catch (err) {
+    console.error("Error fetching plant care instructions:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
