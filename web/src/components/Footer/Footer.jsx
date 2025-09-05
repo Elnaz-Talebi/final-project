@@ -1,5 +1,6 @@
 "use client";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 //all links are disabled for now
 
@@ -7,15 +8,15 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div>
-        <a href="/">Home</a>
-        <a href="/plants">All Plants</a>
-        <a href="/help">Help</a>
+        <Link href="/">Home</Link>
+        <Link href="/plants">All Plants</Link>
+        <Link href="/help">Help</Link>
       </div>
       <div>
-        <a href="https://www.facebook.com"><div className={styles.facebook_icon}></div></a>
-        <a href="https://x.com"><div className={styles.twitter_icon}></div></a>
-        <a href="https://www.instagram.com"><div className={styles.instagram_icon}></div></a>
-        <a href="https://www.linkedin.com"><div className={styles.linkedin_icon}></div></a>
+        <Link href="https://www.facebook.com"><div className={styles.facebook_icon}></div></Link>
+        <Link href="https://x.com"><div className={styles.twitter_icon}></div></Link>
+        <Link href="https://www.instagram.com"><div className={styles.instagram_icon}></div></Link>
+        <Link href="https://www.linkedin.com"><div className={styles.linkedin_icon}></div></Link>
       </div>
     </footer>
   );

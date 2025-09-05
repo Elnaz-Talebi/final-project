@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function PlantCard({
   id,
@@ -32,7 +33,7 @@ export default function PlantCard({
   return (
     <div>
       <div className={styles.card}>
-    <a href={`/plants/${id}`}>
+    <Link href={`/plants/${id}`}>
         <img src={imageUrl} className={styles.card_image} />
         <div className={styles.card_info}>
           <h2>{name}</h2>
@@ -40,7 +41,7 @@ export default function PlantCard({
           <p>{description}</p>
           <p className={styles.price}>{price}DKK</p>
         </div>
-      </a>
+      </Link>
         <div className={styles.card_buttons}>
           {inCart ? (
             <button onClick={changeCart} className={styles.in_cart_button}>

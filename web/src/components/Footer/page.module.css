@@ -14,7 +14,6 @@
     color: white;
     font-weight: bold;
     text-decoration: none;
-    pointer-events: none;
 }
 
 .facebook_icon{
@@ -22,7 +21,6 @@
     height: 25px;
     background-color: white;
     mask-image: url('/facebook_icon.svg');
-    pointer-events: none;
 }
 
 .twitter_icon{
@@ -30,7 +28,6 @@
     height: 25px;
     background-color: white;
     mask-image: url('/twitter_icon.svg');
-    pointer-events: none;
 }
 
 .instagram_icon{
@@ -38,7 +35,6 @@
     height: 25px;
     background-color: white;
     mask-image: url('/instagram_icon.svg');
-    pointer-events: none;
 }
 
 .linkedin_icon{
@@ -46,5 +42,4 @@
     height: 25px;
     background-color: white;
     mask-image: url('/linkedin_icon.svg');
-    pointer-events: none;
 }
