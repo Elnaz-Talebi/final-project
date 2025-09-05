@@ -5,7 +5,13 @@ import { checkPageQueryValidation } from "../utils/checkPageQueryValidation.js";
 
 export const getAllPlantsCard = async (req, res) => {
   try {
-    const result = await db("plants").select("id", "name" , "description", "price", "image_url");
+    const result = await db("plants").select(
+      "id",
+      "name",
+      "description",
+      "price",
+      "image_url"
+    );
 
     if (!result || result.length === 0) {
       return res.status(404).json({ message: "No plants found" });
@@ -47,7 +53,7 @@ export const getLimitedTopRatePlantsCard = async (req, res) => {
       return res.status(400).json({ message: "Invalid limit number" });
     }
     const result = await db("plants")
-      .select("id", "name" , "description", "price", "image_url")
+      .select("id", "name", "description", "price", "image_url")
       .orderBy("average_rating", "asc")
       .limit(limit);
 
@@ -79,7 +85,7 @@ export const getPlantsCardPage = async (req, res) => {
     const offset = (page - 1) * pageSize;
 
     const result = await db("plants")
-      .select("id", "name" , "description", "price", "image_url")
+      .select("id", "name", "description", "price", "image_url")
       .limit(pageSize)
       .offset(offset);
 

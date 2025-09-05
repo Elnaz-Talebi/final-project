@@ -1,15 +1,19 @@
-
-
-export const buildPlantDetailDto = (plant)=>({
-    plantId : plant.id,
-    plantName : plant.name,
-    plantDescription : plant.description,
-    plantPrice : plant.price ,
-    plantImage : plant.image_url ,
-    plantCategory: plant.category,
-    plantTags: plant.tags,
-    careInstructions: plant.care_instructions,
-    averageRating: plant.average_rating,
-    createdAt: plant.created_at,
-    updatedAt: plant.updated_at,
-})
+export const buildPlantDetailDto = (plant) => ({
+  plantId: plant.id,
+  plantName: plant.name,
+  plantDescription: plant.description,
+  plantPrice: plant.price,
+  plantImage: plant.image_url,
+  plantCategory: plant.category,
+  plantTags: plant.tags,
+  waterSchedule: plant.water_schedule,
+  sunlightExposure: plant.sunlight_exposure,
+  humidityAndTemperature: plant.humidity_and_temperature,
+  soilAndFertilizer: plant.soil_and_fertilizer,
+  averageRating: plant.average_rating,
+  scientificName: plant.scientific_name,
+  family: plant.family,
+  origin: plant.origin,
+  createdAt: plant.created_at,
+  updatedAt: plant.updated_at,
+});
