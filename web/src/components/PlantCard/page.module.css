@@ -40,7 +40,3 @@
   color: #48a830ff;
 }
 
-.card:hover {
-  background-color: rgb(246, 255, 245);
-  box-shadow: none;
-}
