@@ -18,7 +18,9 @@ export default function Page() {
     const fetchPlant = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/plants/${plantId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}${plantId}`
+        );
         if (!response.ok) {
           if (response.status === 404) {
             throw new Error("Plant not found");
@@ -53,8 +55,8 @@ export default function Page() {
   return (
     <>
       <PlantInfo plant={plant} />
-      <PlantSpecifications />
-      <PlantCareInstructions plantId={plantId} />
+      <PlantSpecifications plant={plant} />
+      <PlantCareInstructions plant={plant} />
     </>
   );
 }

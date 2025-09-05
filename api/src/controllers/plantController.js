@@ -2,11 +2,16 @@ import db from "../db_connection.js";
 import { buildPlantCardDto } from "../dtos/buildPlantCardDto.js";
 import { buildPlantDetailDto } from "../dtos/buildPlantDetailDto.js";
 import { checkPageQueryValidation } from "../utils/checkPageQueryValidation.js";
-import { buildPlantCareInstructionsDto } from "../dtos/buildPlantCareInstructionsDto.js";
 
 export const getAllPlantsCard = async (req, res) => {
   try {
-    const result = await db("plants").select("id", "name" , "description", "price", "image_url");
+    const result = await db("plants").select(
+      "id",
+      "name",
+      "description",
+      "price",
+      "image_url"
+    );
 
     if (!result || result.length === 0) {
       return res.status(404).json({ message: "No plants found" });
@@ -28,7 +33,7 @@ export const getPlantById = async (req, res) => {
     }
     const result = await db("plants").select("*").where({ id }).first();
 
-    console.log(result)
+    console.log(result);
 
     if (!result) {
       return res.status(404).json({ message: "No plant found" });
@@ -43,32 +48,6 @@ export const getPlantById = async (req, res) => {
   }
 };
 
-export const getPlantCareInstructions = async (req, res) => {
-  try {
-    const id = parseInt(req.params.id);
-    if (!id || isNaN(id) || id < 1) {
-      return res.status(400).json({ message: "Invalid id" });
-    }
-
-    const result = await db("plant_care_instructions")
-      .select("*")
-      .where({ plant_id: id })
-      .first();
-
-    if (!result) {
-      return res
-        .status(404)
-        .json({ message: "No plant care instructions found" });
-    }
-
-    const plantCareInstructions = buildPlantCareInstructionsDto(result);
-    res.json(plantCareInstructions);
-  } catch (err) {
-    console.error("Error fetching plant care instructions:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 export const getLimitedTopRatePlantsCard = async (req, res) => {
   try {
     const limit = parseInt(req.params.limit);
@@ -76,7 +55,7 @@ export const getLimitedTopRatePlantsCard = async (req, res) => {
       return res.status(400).json({ message: "Invalid limit number" });
     }
     const result = await db("plants")
-      .select("id", "name" , "description", "price", "image_url")
+      .select("id", "name", "description", "price", "image_url")
       .orderBy("average_rating", "asc")
       .limit(limit);
 
@@ -108,7 +87,7 @@ export const getPlantsCardPage = async (req, res) => {
     const offset = (page - 1) * pageSize;
 
     const result = await db("plants")
-      .select("id", "name" , "description", "price", "image_url")
+      .select("id", "name", "description", "price", "image_url")
       .limit(pageSize)
       .offset(offset);
 
