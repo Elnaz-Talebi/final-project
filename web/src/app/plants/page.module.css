@@ -45,6 +45,77 @@
   margin-top: 40px;
 }
 
+.buttonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.button {
+  width: 155px;
+  height: 40px;
+  background-color: #48a830ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #3d8a28ff;
+}
+
+.button:disabled {
+  background-color: #a5a5a5;
+  cursor: not-allowed;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* space between buttons and page number */
+  margin: 30px 0;
+}
+
+.paginationButton {
+  width: 120px; /* smaller than .button’s 155px */
+  height: 36px; /* slightly smaller height */
+  background-color: #48a830ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.paginationButton:hover {
+  background-color: #3d8a28ff;
+}
+
+.paginationButton:disabled {
+  background-color: #a5a5a5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #171a1fff;
+}
+
 /* Optional responsive adjustments */
 @media (max-width: 1200px) {
   .plant_page {
