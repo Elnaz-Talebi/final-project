@@ -19,7 +19,7 @@ export default function Page() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}${plantId}`
+          `${process.env.NEXT_PUBLIC_API_URL}/plants/${plantId}`
         );
         if (!response.ok) {
           if (response.status === 404) {
