@@ -33,8 +33,6 @@ export const getPlantById = async (req, res) => {
     }
     const result = await db("plants").select("*").where({ id }).first();
 
-    console.log(result);
-
     if (!result) {
       return res.status(404).json({ message: "No plant found" });
     }
