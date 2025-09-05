@@ -44,3 +44,58 @@
     background-color:rgb(246, 255, 245);
     box-shadow: none;
 }
+
+.add_to_cart_button{
+    width: 100px;
+    height: 40px;
+    background-color: #48A830FF;
+    color: white;
+    border: transparent;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.in_cart_button{
+    width: 100px;
+    height: 40px;
+    background-color: #171A1FFF;
+    color: white;
+    border: transparent;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.card_buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.favorite{
+    width: 40px;
+    height: 40px;
+    background-color: #48A830FF;
+    color: rgb(255, 193, 21);
+    border: transparent;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.not_favorite{
+    width: 40px;
+    height: 40px;
+    background-color: #48A830FF;
+    color: white;
+    border: transparent;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
