@@ -5,7 +5,13 @@ import { checkPageQueryValidation } from "../utils/checkPageQueryValidation.js";
 
 export const getAllPlantsCard = async (req, res) => {
   try {
-    const result = await db("plants").select("id", "name" , "description", "price", "image_url");
+    const result = await db("plants").select(
+      "id",
+      "name",
+      "description",
+      "price",
+      "image_url"
+    );
 
     if (!result || result.length === 0) {
       return res.status(404).json({ message: "No plants found" });
@@ -27,7 +33,7 @@ export const getPlantById = async (req, res) => {
     }
     const result = await db("plants").select("*").where({ id }).first();
 
-    console.log(result)
+    console.log(result);
 
     if (!result) {
       return res.status(404).json({ message: "No plant found" });
@@ -49,7 +55,7 @@ export const getLimitedTopRatePlantsCard = async (req, res) => {
       return res.status(400).json({ message: "Invalid limit number" });
     }
     const result = await db("plants")
-      .select("id", "name" , "description", "price", "image_url")
+      .select("id", "name", "description", "price", "image_url")
       .orderBy("average_rating", "asc")
       .limit(limit);
 
@@ -81,15 +87,21 @@ export const getPlantsCardPage = async (req, res) => {
     const offset = (page - 1) * pageSize;
 
     const result = await db("plants")
-      .select("id", "name" , "description", "price", "image_url")
+      .select("id", "name", "description", "price", "image_url")
       .limit(pageSize)
       .offset(offset);
 
     const plants = result.map((plant) => buildPlantCardDto(plant));
+    const totalResults = await db("plants").count("id as count").first();
+
+    if (!plants || plants.length === 0) {
+      return res.status(404).json({ message: "No plants found" });
+    }
 
     res.json({
       page,
       pageSize,
+      totalResults: Number(totalResults.count),
       results: plants.length,
       plants: plants,
     });
