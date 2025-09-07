@@ -1,24 +1,74 @@
 "use client";
-import PlantCard from "../PlantCard/PlantCard";
-import { useEffect, useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "./page.module.css";
+import SearchFilterSort from "@/components/SearchFilterSort/SearchFilterSort";
+import PlantCard from "@/components/PlantCard/PlantCard";
+import Loading from "@/components/Loading/Loading";
+import Error from "@/components/Error/Error";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function HomePage() {
   const [plants, setPlants] = useState([]);
+  const [filteredPlants, setFilteredPlants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
-  {
-    /*taking the data of plants and storing them in useState*/
-  }
   useEffect(() => {
-    let url = "http://localhost:5000/plants";
-
-    fetch(url)
-      .then((res) => res.json())
-      .then(setPlants);
+    const fetchPlants = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/plants`);
+        if (!res.ok) throw new Error("Failed to fetch plants");
+        const data = await res.json();
+        const formatted = (data.plants || []).map((p) => ({
+          plantId: p.plantId || p.id,
+          plantName: p.plantName || p.name || "",
+          category: (p.category || p.plantCategory || "").toLowerCase(),
+          price: Number(p.plantPrice || p.price || 0),
+          average_rating: Number(p.average_rating || 0),
+          plantDescription: p.plantDescription || "",
+          plantImage: p.plantImage || "",
+        }));
+        setPlants(formatted);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPlants();
   }, []);
+
+  const randomPlants = useMemo(() => {
+    if (!plants || plants.length === 0) return [];
+    return [...plants].sort(() => Math.random() - 0.5).slice(0, 5);
+  }, [plants]);
+
+  if (loading) return <Loading />;
+  if (error) return <Error message={error.message} />;
+
+  const handleSearchClick = (searchTerm, category, maxPrice, sort) => {
+    if (!searchTerm || searchTerm.trim() === "") return;
+    const params = new URLSearchParams();
+    params.set("search", searchTerm.trim());
+    if (category) params.set("category", category);
+    if (maxPrice) params.set("maxPrice", maxPrice);
+    if (sort) params.set("sort", sort);
+    router.push(`/plants?${params.toString()}`);
+  };
 
   return (
     <div className={styles.main}>
+      <SearchFilterSort
+        plants={randomPlants}
+        onFiltered={(filteredArray) => setFilteredPlants(filteredArray)}
+        navigateOnSearch={true}
+        searchPath="/plants"
+        onSearchClick={handleSearchClick}
+      />
+
       <div className={styles.intro}>
         <div className={styles.intro_text}>
           <h1>Bring Nature Indoors</h1>
@@ -27,53 +77,25 @@ export default function Home() {
             Cultivate your green space with our curated selection for every
             corner of your home.
           </p>
-          <a href="#catalog">
-            <button className={styles.button}>Shop Now</button>
-          </a>
+          <Link href="/plants">
+            <button className={styles.button}>Show All Plants</button>
+          </Link>
         </div>
         <img src="./main_photo.png" className={styles.intro_photo} />
       </div>
+
       <div id="catalog">
-        <div className={styles.inputs}>
-          {/*they doesn't have functionality for now... Waiting the API*/}
-          <input
-            type="text"
-            placeholder="Search plants..."
-            className={styles.search_bar}
-          />
-          <div className={styles.selections}>
-            <select>
-              <option value="">Category</option>
-              <option value="Indoor">Indoor</option>
-              <option value="Outdoor">Outdoor</option>
-            </select>
-            <select>
-              <option value="">Price Range</option>
-              <option value="10">Less than 10DKK</option>
-              <option value="10">Less than 20DKK</option>
-              <option value="10">Less than 30DKK</option>
-              <option value="10">Less than 40DKK</option>
-              <option value="10">Less than 50DKK</option>
-            </select>
-            <select>
-              <option value="">Sort by</option>
-              <option value="name">Name</option>
-              <option value="price">Price</option>
-              <option value="averageRating">Average rating</option>
-            </select>
-          </div>
-        </div>
-        {/*the list of plants*/}
         <div className={styles.catalog}>
-          {(Array.isArray(plants) ? plants : [])?.map((plant) => (
+          {randomPlants.map((plant) => (
             <PlantCard
-              key={plant.id}
-              id={plant.id}
-              name={plant.name}
-              description={plant.description}
+              key={plant.plantId}
+              id={plant.plantId}
+              name={plant.plantName}
+              description={plant.plantDescription}
               price={plant.price}
-              imageUrl={plant.image_url}
+              imageUrl={plant.plantImage}
               averageRating={plant.average_rating}
+              category={plant.category}
             />
           ))}
         </div>

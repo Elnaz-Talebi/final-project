@@ -39,7 +39,7 @@ export default function PlantCard({
           <h2>{name}</h2>
           <p>Average rating: {averageRating}</p>
           <p>{description}</p>
-          <p className={styles.price}>{price}DKK</p>
+          <p className={styles.price}>{price} DKK</p>
         </div>
       </Link>
         <div className={styles.card_buttons}>
