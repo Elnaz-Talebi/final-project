@@ -33,7 +33,7 @@ export default function HomePage() {
         }));
         setPlants(formatted);
       } catch (err) {
-        setError(err);
+        setError({ message: err?.message || String(err) });
       } finally {
         setLoading(false);
       }

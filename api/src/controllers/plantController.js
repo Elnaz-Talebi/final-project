@@ -90,10 +90,16 @@ export const getPlantsCardPage = async (req, res) => {
       .offset(offset);
 
     const plants = result.map((plant) => buildPlantCardDto(plant));
+    const totalResults = await db("plants").count("id as count").first();
+
+    if (!plants || plants.length === 0) {
+      return res.status(404).json({ message: "No plants found" });
+    }
 
     res.json({
       page,
       pageSize,
+      totalResults: Number(totalResults.count),
       results: plants.length,
       plants: plants,
     });

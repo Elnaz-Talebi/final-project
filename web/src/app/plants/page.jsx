@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 import SearchFilterSort from "@/components/SearchFilterSort/SearchFilterSort";
 import PlantCard from "@/components/PlantCard/PlantCard";
@@ -8,75 +8,70 @@ import Loading from "@/components/Loading/Loading";
 import Error from "@/components/Error/Error";
 
 export default function PlantsPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-
-  const [plants, setPlants] = useState([]); // full dataset
-  const [filteredPlants, setFilteredPlants] = useState([]); // filtered dataset
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+  const searchParams = useSearchParams();
   const pageSize = 12;
 
-  // Fetch all plants once
-  useEffect(() => {
-    const fetchPlants = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/plants/all`
-        );
-        if (!res.ok) throw new Error("Failed to fetch plants");
-        const data = await res.json();
+  const initialPage = parseInt(searchParams.get("page")) || 1;
 
-        const formatted = data.map((p) => ({
-          plantId: p.plantId || p.id,
-          plantName: p.plantName || p.name || "",
-          category: (p.category || p.plantCategory || "").toLowerCase(),
-          price: Number(p.plantPrice || p.price || 0),
-          average_rating: Number(p.average_rating || 0),
-          plantDescription: p.plantDescription || "",
-          plantImage: p.plantImage || "",
-        }));
+  const [page, setPage] = useState(initialPage);
+  const [plants, setPlants] = useState([]);
+  const [filteredPlants, setFilteredPlants] = useState([]);
+  const [totalResults, setTotalResults] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
-        setPlants(formatted);
-        setFilteredPlants(formatted);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchPlants = async (pageNum) => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/plants?page=${pageNum}&pageSize=${pageSize}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch plants");
+      const data = await res.json();
 
-    fetchPlants();
-  }, []);
+      const formatted = data.plants.map((p) => ({
+        plantId: p.plantId,
+        plantName: p.plantName,
+        category: "",
+        price: Number(p.plantPrice),
+        average_rating: 0,
+        plantDescription: p.plantDescription,
+        plantImage: p.plantImage,
+      }));
 
-  // Handle filtering from SearchFilterSort
-  const handleFilterChange = (filteredArray) => {
-    setFilteredPlants(filteredArray);
-    setPage(1); // reset to first page whenever filter changes
+      setPlants(formatted);
+      setFilteredPlants(formatted);
+      setTotalResults(data.totalResults || 0);
+      setIsSearchActive(false);
+    } catch (err) {
+      setError({ message: err?.message || String(err) });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Pagination
-  const handlePageChange = (newPage) => {
-    if (newPage < 1) return;
-    const maxPage = Math.ceil(filteredPlants.length / pageSize);
-    if (newPage > maxPage) return;
-    setPage(newPage);
+  useEffect(() => {
+    fetchPlants(page);
+    router.replace(`/plants?page=${page}&pageSize=${pageSize}`);
+  }, [page]);
 
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", newPage);
-    router.push(`/plants?${params.toString()}`);
+  const handleFilterChange = (filteredArray, searchTriggered = false) => {
+    setFilteredPlants(filteredArray);
+    setIsSearchActive(searchTriggered);
+  };
+
+  const maxPage = Math.ceil(totalResults / pageSize);
+
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > maxPage) return;
+    setPage(newPage);
   };
 
   if (loading) return <Loading />;
   if (error) return <Error message={error.message} />;
 
-  // Slice filteredPlants for current page
-  const startIdx = (page - 1) * pageSize;
-  const paginated = filteredPlants.slice(startIdx, startIdx + pageSize);
-  console.log("Filtered Plants:", filteredPlants);
   return (
     <div className={styles.plant_page}>
       <SearchFilterSort
@@ -85,37 +80,47 @@ export default function PlantsPage() {
         navigateOnSearch={false}
       />
 
-      <h1>Our Plants Collection</h1>
+      <h1>{isSearchActive ? "Search Results" : "Our Plants Collection"}</h1>
+
       <div className={styles.plant_grid}>
-        {paginated.map((plant) => (
-          <PlantCard
-            key={plant.plantId}
-            id={plant.plantId}
-            name={plant.plantName}
-            description={plant.plantDescription}
-            price={plant.price}
-            imageUrl={plant.plantImage}
-            averageRating={plant.average_rating}
-          />
-        ))}
+        {filteredPlants.length === 0 ? (
+          <p>No plants found.</p>
+        ) : (
+          filteredPlants.map((plant) => (
+            <PlantCard
+              key={plant.plantId}
+              id={plant.plantId}
+              name={plant.plantName}
+              description={plant.plantDescription}
+              price={plant.price}
+              imageUrl={plant.plantImage}
+              averageRating={plant.average_rating}
+            />
+          ))
+        )}
       </div>
-      <div className={styles.pagination}>
-        <button
-          className={styles.paginationButton}
-          onClick={() => handlePageChange(page - 1)}
-          disabled={page === 1}
-        >
-          Previous
-        </button>
-        <span>Page {page}</span>
-        <button
-          className={styles.paginationButton}
-          onClick={() => handlePageChange(page + 1)}
-          disabled={startIdx + pageSize >= filteredPlants.length}
-        >
-          Next
-        </button>
-      </div>
+
+      {!isSearchActive && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.paginationButton}
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page <= 1 || loading}
+          >
+            Previous
+          </button>
+          <span>
+            Page {page} of {maxPage}
+          </span>
+          <button
+            className={styles.paginationButton}
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page >= maxPage || loading}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }
