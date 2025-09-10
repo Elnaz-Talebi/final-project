@@ -40,6 +40,7 @@ export const login = async (req, res) => {
       id: user.id,
       email: user.email,
       username: user.username || null,
+      role: user.role || "user",
     });
   } catch (err) {
     return res.status(500).json({ error: "Internal server error" });
@@ -53,7 +54,7 @@ export const me = async (req, res) => {
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const user = await db("users")
-      .select("id", "email", "username")
+      .select("id", "email", "username", "role")
       .where({ id: payload.sub })
       .first();
     if (!user) return res.status(401).json({ error: "Unauthorized" });
@@ -98,6 +99,7 @@ export const register = async (req, res) => {
       id: created.id,
       email: created.email,
       username: created.username,
+      role: "user",
     });
   } catch (err) {
     return res.status(500).json({ error: "Internal server error" });
