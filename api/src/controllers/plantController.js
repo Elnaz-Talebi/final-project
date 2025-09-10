@@ -2,6 +2,9 @@ import db from "../db_connection.js";
 import { buildPlantCardDto } from "../dtos/buildPlantCardDto.js";
 import { buildPlantDetailDto } from "../dtos/buildPlantDetailDto.js";
 import { checkPageQueryValidation } from "../utils/checkPageQueryValidation.js";
+import sanitizeHtml from "sanitize-html";
+
+// Controller to get all plants (cards only)
 
 export const getAllPlantsCard = async (req, res) => {
   try {
@@ -110,9 +113,10 @@ export const getPlantsCardPage = async (req, res) => {
 };
 
 // This controller is for inserting a new plant (admin only)
+
 export const insertPlantOnlyAdmin = async (req, res) => {
   try {
-    const {
+    let {
       name,
       description,
       price,
@@ -143,6 +147,52 @@ export const insertPlantOnlyAdmin = async (req, res) => {
     ) {
       return res.status(400).json({ error: "All fields are required" });
     }
+
+    // Sanitize all string inputs
+    name = sanitizeHtml(name, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    description = sanitizeHtml(description, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    image_url = sanitizeHtml(image_url, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    category = sanitizeHtml(category, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    water_schedule = sanitizeHtml(water_schedule, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    sunlight_exposure = sanitizeHtml(sunlight_exposure, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    humidity_and_temperature = sanitizeHtml(humidity_and_temperature, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    soil_and_fertilizer = sanitizeHtml(soil_and_fertilizer, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    scientific_name = sanitizeHtml(scientific_name, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    family = sanitizeHtml(family, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    origin = sanitizeHtml(origin, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
 
     const [plant] = await db("plants")
       .insert({
@@ -178,7 +228,7 @@ export const insertPlantOnlyAdmin = async (req, res) => {
         "avg_rating",
       ]);
 
-    res.status(201).json({ message: "Plant Inserted Sucessfully", plant });
+    res.status(201).json({ message: "Plant Inserted Successfully", plant });
   } catch (err) {
     res.status(500).json({ error: "Failed to Insert New Plant" });
   }
