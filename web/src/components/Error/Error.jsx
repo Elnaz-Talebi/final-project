@@ -20,7 +20,7 @@ export default function Error({ error }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.error}>Error: {errorMessage}</div>
+      <div className={styles.error}>{errorMessage}</div>
     </div>
   );
 }
