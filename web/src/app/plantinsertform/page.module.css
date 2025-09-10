@@ -1,0 +1,108 @@
+@font-face {
+  font-family: Lora;
+  src: url("/Lora.ttf");
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("/Inter.ttf");
+}
+
+.insertPlantContainer {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Inter, sans-serif;
+  color: #171a1f;
+}
+
+.insertPlantContainer h1 {
+  font-family: Lora, serif;
+  font-size: 36px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.plantForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formGroup label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333333;
+}
+
+.formGroup input,
+.formGroup textarea {
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: Inter, sans-serif;
+  border: 1px solid #dee1e6;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  border-color: #48a830;
+  box-shadow: 0 0 5px rgba(72, 168, 48, 0.3);
+}
+
+.formGroup textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.submitButton {
+  width: 200px;
+  align-self: center;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #48a830;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #3d8a28;
+}
+
+.insertPlantContainer p {
+  text-align: center;
+  font-weight: 500;
+}
+
+.insertPlantContainer p[style*="green"] {
+  color: #28a745;
+}
+
+.insertPlantContainer p[style*="red"] {
+  color: #dc3545;
+}
+
+@media (max-width: 768px) {
+  .insertPlantContainer {
+    padding: 15px 20px;
+  }
+
+  .submitButton {
+    width: 100%;
+  }
+}

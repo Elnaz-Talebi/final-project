@@ -228,7 +228,7 @@ export const insertPlantOnlyAdmin = async (req, res) => {
         "avg_rating",
       ]);
 
-    res.status(201).json({ message: "Plant Inserted Successfully", plant });
+    res.status(201).json({ message: "Plant Inserted Successfully" });
   } catch (err) {
     res.status(500).json({ error: "Failed to Insert New Plant" });
   }

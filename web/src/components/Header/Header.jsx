@@ -60,7 +60,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <img src="./logo_everleaf.png" className={styles.header_image} />
+        <img src="/logo_everleaf.png" className={styles.header_image} />
         <p className={styles.logo_text}>EverLeaf</p>
       </div>
       <nav className={styles.nav}>
@@ -87,7 +87,7 @@ export default function Header() {
               <span className={styles.username}>
                 {user.username || user.email}
               </span>
-              <img src="./user_icon.png" className={styles.header_image} />
+              <img src="/user_icon.png" className={styles.header_image} />
             </button>
             {open && (
               <div className={styles.dropdown} role="menu">
