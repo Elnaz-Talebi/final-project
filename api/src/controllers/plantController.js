@@ -108,3 +108,78 @@ export const getPlantsCardPage = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// This controller is for inserting a new plant (admin only)
+export const insertPlantOnlyAdmin = async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      price,
+      image_url,
+      category,
+      water_schedule,
+      sunlight_exposure,
+      humidity_and_temperature,
+      soil_and_fertilizer,
+      scientific_name,
+      family,
+      origin,
+    } = req.body;
+
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !image_url ||
+      !category ||
+      !water_schedule ||
+      !sunlight_exposure ||
+      !humidity_and_temperature ||
+      !soil_and_fertilizer ||
+      !scientific_name ||
+      !family ||
+      !origin
+    ) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const [plant] = await db("plants")
+      .insert({
+        name,
+        description,
+        price,
+        image_url,
+        category,
+        water_schedule,
+        sunlight_exposure,
+        humidity_and_temperature,
+        soil_and_fertilizer,
+        scientific_name,
+        family,
+        origin,
+      })
+      .returning([
+        "id",
+        "name",
+        "description",
+        "price",
+        "image_url",
+        "category",
+        "created_at",
+        "updated_at",
+        "water_schedule",
+        "sunlight_exposure",
+        "humidity_and_temperature",
+        "soil_and_fertilizer",
+        "scientific_name",
+        "family",
+        "origin",
+        "avg_rating",
+      ]);
+
+    res.status(201).json({ message: "Plant Inserted Sucessfully", plant });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to Insert New Plant" });
+  }
+};
