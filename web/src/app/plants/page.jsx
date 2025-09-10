@@ -73,54 +73,55 @@ export default function PlantsPage() {
   if (error) return <Error message={error.message} />;
 
   return (
-    <div className={styles.plant_page}>
+    <div>
       <SearchFilterSort
         plants={plants}
         onFiltered={handleFilterChange}
         navigateOnSearch={false}
       />
+      <div className={styles.plant_page}>
+        <h1>{isSearchActive ? "Search Results" : "Our Plants Collection"}</h1>
 
-      <h1>{isSearchActive ? "Search Results" : "Our Plants Collection"}</h1>
+        <div className={styles.plant_grid}>
+          {filteredPlants.length === 0 ? (
+            <p>No plants found.</p>
+          ) : (
+            filteredPlants.map((plant) => (
+              <PlantCard
+                key={plant.plantId}
+                id={plant.plantId}
+                name={plant.plantName}
+                description={plant.plantDescription}
+                price={plant.price}
+                imageUrl={plant.plantImage}
+                averageRating={plant.average_rating}
+              />
+            ))
+          )}
+        </div>
 
-      <div className={styles.plant_grid}>
-        {filteredPlants.length === 0 ? (
-          <p>No plants found.</p>
-        ) : (
-          filteredPlants.map((plant) => (
-            <PlantCard
-              key={plant.plantId}
-              id={plant.plantId}
-              name={plant.plantName}
-              description={plant.plantDescription}
-              price={plant.price}
-              imageUrl={plant.plantImage}
-              averageRating={plant.average_rating}
-            />
-          ))
+        {!isSearchActive && (
+          <div className={styles.pagination}>
+            <button
+              className={styles.paginationButton}
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page <= 1 || loading}
+            >
+              Previous
+            </button>
+            <span>
+              Page {page} of {maxPage}
+            </span>
+            <button
+              className={styles.paginationButton}
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page >= maxPage || loading}
+            >
+              Next
+            </button>
+          </div>
         )}
       </div>
-
-      {!isSearchActive && (
-        <div className={styles.pagination}>
-          <button
-            className={styles.paginationButton}
-            onClick={() => handlePageChange(page - 1)}
-            disabled={page <= 1 || loading}
-          >
-            Previous
-          </button>
-          <span>
-            Page {page} of {maxPage}
-          </span>
-          <button
-            className={styles.paginationButton}
-            onClick={() => handlePageChange(page + 1)}
-            disabled={page >= maxPage || loading}
-          >
-            Next
-          </button>
-        </div>
-      )}
     </div>
   );
 }

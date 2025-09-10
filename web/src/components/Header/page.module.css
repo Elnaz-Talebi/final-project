@@ -12,13 +12,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-right: 20px;
-    padding-left: 40px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px 7%;
     box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f14;
     background-color: white;
     color: rgb(23 23 23);
+    z-index: 1;
 }
 
 .header_container{
@@ -29,9 +27,10 @@
 }
 
 .header_image{
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .nav{
@@ -81,9 +80,73 @@
 }
 
 .logo_text{
-    margin-top: 13px;
+    margin-top: 15px;
     font-size: 20px;
     font-family: 'logo';
     font-weight: bold;
     color: #48A830FF;
+}
+
+.profile_menu{
+    position: absolute;
+    top: 90px;
+    right: 75px;
+    background-color: white;
+    border: #171a1f solid 1px;
+    border-radius: 10px;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-name: showing;
+}
+
+@keyframes showing{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+
+.value{
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.value:hover{
+    background-color: rgb(130, 202, 111);
+    color: white;
+    animation-name: changeColor;
+    animation-duration: 1s;
+}
+
+@keyframes changeColor {
+    0%{
+        background-color: white;
+        color:#171a1f;
+    }
+    100%{
+        background-color: rgb(130, 202, 111);
+        color: white;
+    }
+}
+
+.basket_icon{
+    margin-right: 5px;
+    width: 40px;
+    height: 40px;
+}
+
+.user_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.username{
+    margin: 0 15px;
+    font-family: Inter;
 }

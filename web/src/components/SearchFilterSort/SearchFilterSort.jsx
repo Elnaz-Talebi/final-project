@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { Search } from "lucide-react";
 
 export default function SearchFilterSort({
   plants = [],
@@ -117,7 +118,7 @@ export default function SearchFilterSort({
           onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
         />
         <button onClick={handleSearchClick} className={styles.search_icon}>
-          🔍
+          <Search className={styles.search_icon_img} />
         </button>
       </div>
 

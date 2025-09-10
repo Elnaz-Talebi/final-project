@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "final-project",
+  title: "EverLeaf",
   description: "Next.js + Express + Postgres",
 };
 
