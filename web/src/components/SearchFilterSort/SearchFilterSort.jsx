@@ -57,7 +57,7 @@ export default function SearchFilterSort({
           return (a.plantName || "").localeCompare(b.plantName || "");
         if (selectedSort === "price") return (a.price || 0) - (b.price || 0);
         if (selectedSort === "averageRating")
-          return (b.average_rating || 0) - (a.average_rating || 0);
+          return (b.averageRating || 0) - (a.averageRating || 0);
         return 0;
       });
     }
