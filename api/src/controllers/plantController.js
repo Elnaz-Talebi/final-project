@@ -48,7 +48,7 @@ export const getLimitedTopRatePlantsCard = async (req, res) => {
     }
     const result = await db("plants")
       .select("id", "name" , "description", "price", "image_url")
-      .orderBy("avg_rating", "asc")
+      .orderBy("average_rating", "asc")
       .limit(limit);
 
     if (!result || result.length === 0) {
