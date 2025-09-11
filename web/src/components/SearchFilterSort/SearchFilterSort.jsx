@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { Search } from "lucide-react";
 
 export default function SearchFilterSort({
   plants = [],
@@ -56,7 +57,7 @@ export default function SearchFilterSort({
           return (a.plantName || "").localeCompare(b.plantName || "");
         if (selectedSort === "price") return (a.price || 0) - (b.price || 0);
         if (selectedSort === "averageRating")
-          return (b.average_rating || 0) - (a.average_rating || 0);
+          return (b.averageRating || 0) - (a.averageRating || 0);
         return 0;
       });
     }
@@ -117,7 +118,7 @@ export default function SearchFilterSort({
           onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
         />
         <button onClick={handleSearchClick} className={styles.search_icon}>
-          🔍
+          <Search className={styles.search_icon_img} />
         </button>
       </div>
 

@@ -1,13 +1,14 @@
 .inputs {
   display: flex;
   justify-content: space-between;
-  margin: 20px 100px;
+  margin: 20px 7%;
+  padding-top: 50px;
   align-items: center;
 }
 
 .search_container {
   position: relative;
-  width: 250px;
+  width: 300px;
 }
 
 .search_bar {
@@ -16,6 +17,8 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   outline: none;
+  background-color: white;
+  color: black;
 }
 
 .search_icon {
@@ -25,6 +28,8 @@
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 16px;
+  background-color: white;
+  border: none;
   color: #555;
 }
 
@@ -43,4 +48,9 @@
   background-color: white;
   border-radius: 6px;
   border: 1px solid #dee1e6ff;
+}
+
+.search_icon_img{
+  margin-top: 4px;
+  width: 20px;
 }

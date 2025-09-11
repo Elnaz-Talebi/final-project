@@ -27,7 +27,7 @@ export default function HomePage() {
           plantName: p.plantName || p.name || "",
           category: (p.category || p.plantCategory || "").toLowerCase(),
           price: Number(p.plantPrice || p.price || 0),
-          average_rating: Number(p.average_rating || 0),
+          averageRating: Number(p.averageRating || 0),
           plantDescription: p.plantDescription || "",
           plantImage: p.plantImage || "",
         }));
@@ -94,7 +94,7 @@ export default function HomePage() {
               description={plant.plantDescription}
               price={plant.price}
               imageUrl={plant.plantImage}
-              averageRating={plant.average_rating}
+              averageRating={plant.averageRating}
               category={plant.category}
             />
           ))}
