@@ -3,7 +3,13 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Heart, LogOut, Plus, ShoppingBasket, CircleUserRound } from "lucide-react";
+import {
+  Heart,
+  LogOut,
+  Plus,
+  ShoppingBasket,
+  CircleUserRound,
+} from "lucide-react";
 
 export default function Header() {
   const [user, setUser] = useState(null);
@@ -94,36 +100,36 @@ export default function Header() {
             {open && (
               <div className={styles.dropdown} role="menu">
                 {user.role === "admin" && (
-                 <div className={styles.dropdown_item}>
-                  <Link
-                    href="/plantinsertform"
-                    className={styles.icon_and_text}
-                    onClick={() => setOpen(false)}
-                  >
-                    <Plus size={16} />
-                    Insert Plant
-                  </Link>
-              </div>
+                  <div className={styles.dropdown_item}>
+                    <Link
+                      href="/plantinsertform"
+                      className={styles.icon_and_text}
+                      onClick={() => setOpen(false)}
+                    >
+                      <Plus size={16} />
+                      Insert Plant
+                    </Link>
+                  </div>
                 )}
                 <div className={styles.dropdown_item}>
-                <Link
-                  className={styles.icon_and_text}
-                  href="/favorites"
-                  onClick={() => setOpen(false)}
-                >
-                  <Heart size={16} />
-                  Favorites
-                </Link>
+                  <Link
+                    className={styles.icon_and_text}
+                    href="/favorites"
+                    onClick={() => setOpen(false)}
+                  >
+                    <Heart size={16} />
+                    Favorites
+                  </Link>
                 </div>
                 <div className={styles.dropdown_item}>
-                <Link
-                  href="/"
-                  className={styles.icon_and_text}
-                  onClick={handleLogout}
-                >
-                  <LogOut size={16} />
-                  Logout
-                </Link>
+                  <Link
+                    href="/"
+                    className={styles.icon_and_text}
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={16} />
+                    Logout
+                  </Link>
                 </div>
               </div>
             )}
