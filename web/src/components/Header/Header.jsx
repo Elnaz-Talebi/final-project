@@ -1,14 +1,62 @@
 "use client";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useState } from "react";
-import { ShoppingBasket } from "lucide-react";
-import { CircleUserRound } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Heart, LogOut, Plus, ShoppingBasket, CircleUserRound } from "lucide-react";
 
 export default function Header() {
-  const [user, setUser] = useState(true);
-  const [clicked, setClick] = useState(false);
-  const [admin, setAdmin] = useState(true);
+  const [user, setUser] = useState(null);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    async function fetchMe() {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await res.json();
+      setUser(data);
+    }
+    fetchMe();
+  }, []);
+
+  useEffect(() => {
+    function handleDocClick(e) {
+      if (!menuRef.current) return;
+      if (!menuRef.current.contains(e.target)) setOpen(false);
+    }
+    function handleEsc(e) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    if (open) {
+      document.addEventListener("mousedown", handleDocClick);
+      document.addEventListener("keydown", handleEsc);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleDocClick);
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [open]);
+
+  async function handleLogout() {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } finally {
+      setUser(null);
+      setOpen(false);
+      if (typeof window !== "undefined") window.location.href = "/";
+    }
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
@@ -28,51 +76,58 @@ export default function Header() {
             <button className={styles.login_button}>Login</button>
           </Link>
         )}
-        {/*Added the "user" variable, so if user logged in, so the icon is showed, else - it doesn't show anything
-        Anyway I'm a little bit unsure, how this will work, because authentication is on login page, so the setUser function will be called there and set user to true or this should be made in some other way*/}
         {user && (
-          <div className={styles.user_container}>
+          <div className={styles.profile_wrapper} ref={menuRef}>
             <Link href="/">
               <ShoppingBasket className={styles.basket_icon} />
             </Link>
-            <p className={styles.username}>UserName</p>
             <CircleUserRound
-              onClick={() => setClick(!clicked)}
-              className={styles.header_image}
-            />
-            {clicked &&
-              (!admin ? (
-                <div className={styles.profile_menu}>
-                  <div className={styles.value}>
-                    <Link href="/user/profile">Profile</Link>
-                  </div>
-                  <div className={styles.value}>
-                    <Link href="/">Favorites</Link>
-                  </div>
-                  <div className={styles.value}>
-                    <Link href="/" onClick={() => setUser(!user)}>
-                      Log out
-                    </Link>
-                  </div>
+              className={styles.profile_button}
+              onClick={() => setOpen((v) => !v)}
+              aria-haspopup="menu"
+              aria-expanded={open}
+            >
+              <span className={styles.username}>
+                {user.username || user.email}
+              </span>
+              <img src="./user_icon.png" className={styles.header_image} />
+            </CircleUserRound>
+            {open && (
+              <div className={styles.dropdown} role="menu">
+                {user.role === "admin" && (
+                 <div className={styles.dropdown_item}>
+                  <Link
+                    href="/plantinsertform"
+                    className={styles.icon_and_text}
+                    onClick={() => setOpen(false)}
+                  >
+                    <Plus size={16} />
+                    Insert Plant
+                  </Link>
+              </div>
+                )}
+                <div className={styles.dropdown_item}>
+                <Link
+                  className={styles.icon_and_text}
+                  href="/favorites"
+                  onClick={() => setOpen(false)}
+                >
+                  <Heart size={16} />
+                  Favorites
+                </Link>
                 </div>
-              ) : (
-                <div className={styles.profile_menu}>
-                  <div className={styles.value}>
-                    <Link href="/user/profile">Profile</Link>
-                  </div>
-                  <div className={styles.value}>
-                    <Link href="/">Insert plant</Link>
-                  </div>
-                  <div className={styles.value}>
-                    <Link href="/">Favorites</Link>
-                  </div>
-                  <div className={styles.value}>
-                    <Link href="/" onClick={() => setUser(!user)}>
-                      Log out
-                    </Link>
-                  </div>
+                <div className={styles.dropdown_item}>
+                <Link
+                  href="/"
+                  className={styles.icon_and_text}
+                  onClick={handleLogout}
+                >
+                  <LogOut size={16} />
+                  Logout
+                </Link>
                 </div>
-              ))}
+              </div>
+            )}
           </div>
         )}
       </div>

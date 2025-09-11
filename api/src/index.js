@@ -5,16 +5,20 @@ import cors from "cors";
 import plantsRouter from "./routers/plants.js";
 import reviewsRouter from "./routers/reviews.js";
 import usersRouter from "./routers/users.js";
+import cookieParser from "cookie-parser";
+import authenticationsRouter from "./routers/auth.js";
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/plants", plantsRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/users", usersRouter);
+app.use("/auth", authenticationsRouter);
 
 app.get("/", (_req, res) => {
   res.send("API is running...");
