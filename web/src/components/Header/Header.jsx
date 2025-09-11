@@ -96,7 +96,6 @@ export default function Header() {
               <span className={styles.username}>
                 {user.username || user.email}
               </span>
-              <img src="./user_icon.png" className={styles.header_image} />
             </CircleUserRound>
             {open && (
               <div className={styles.dropdown} role="menu">
