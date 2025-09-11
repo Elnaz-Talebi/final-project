@@ -1,6 +1,7 @@
 import db from "../db_connection.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import sanitizeHtml from "sanitize-html";
 
 const COOKIE_NAME = "auth_token";
 
@@ -9,7 +10,7 @@ const cookieOptions = {
   sameSite: "lax",
   secure: process.env.NODE_ENV === "production",
   path: "/",
-  maxAge: 1 * 24 * 60 * 60 * 1000, // Keep the session for 24 hours
+  maxAge: 1 * 24 * 60 * 60 * 1000,
 };
 
 export const login = async (req, res) => {
@@ -72,25 +73,41 @@ export const logout = (_req, res) => {
 
 export const register = async (req, res) => {
   try {
-    const { email, password, username } = req.body || {};
+    let { email, password, username } = req.body || {};
 
-    // Validate required fields
+    username = sanitizeHtml(username || "", {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    email = sanitizeHtml(email || "", {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+    password = sanitizeHtml(password || "", {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+
     if (!email || !password || !username) {
       return res
         .status(400)
         .json({ error: "Email, username and password are required" });
     }
 
-    // Check for existing user by email
+    if (!/^[A-Za-z0-9]*[A-Za-z]+[A-Za-z0-9]*$/.test(username)) {
+      return res.status(400).json({
+        error:
+          "Invalid username. Must contain letters, can include numbers, no spaces or special characters.",
+      });
+    }
+
     const existing = await db("users").select("id").where({ email }).first();
     if (existing) {
       return res.status(409).json({ error: "Email already in use" });
     }
 
-    // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // Insert user
     const [created] = await db("users")
       .insert({ email, username, password_hash: passwordHash, role: "user" })
       .returning(["id", "email", "username"]);

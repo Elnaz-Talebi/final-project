@@ -12,9 +12,9 @@
   max-width: 900px;
   margin: 50px auto;
   padding: 20px 30px;
-  background-color: #ffffff;
+  background-color: #f9fdf7;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   font-family: Inter, sans-serif;
   color: #171a1f;
 }
@@ -24,11 +24,13 @@
   font-size: 36px;
   margin-bottom: 25px;
   text-align: center;
+  color: #48a830;
 }
 
 .plantForm {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 
@@ -36,6 +38,8 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .formGroup label {
@@ -52,7 +56,9 @@
   border: 1px solid #dee1e6;
   border-radius: 6px;
   outline: none;
+  background-color: #ffffff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #171a1f;
 }
 
 .formGroup input:focus,
@@ -67,8 +73,7 @@
 }
 
 .submitButton {
-  width: 200px;
-  align-self: center;
+  width: 155px;
   padding: 12px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -78,6 +83,7 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  align-self: center;
 }
 
 .submitButton:hover {
