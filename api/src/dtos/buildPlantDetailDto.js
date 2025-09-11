@@ -10,7 +10,7 @@ export const buildPlantDetailDto = (plant) => ({
   sunlightExposure: plant.sunlight_exposure,
   humidityAndTemperature: plant.humidity_and_temperature,
   soilAndFertilizer: plant.soil_and_fertilizer,
-  averageRating: plant.average_rating,
+  averageRating: plant.avg_rating,
   scientificName: plant.scientific_name,
   family: plant.family,
   origin: plant.origin,
