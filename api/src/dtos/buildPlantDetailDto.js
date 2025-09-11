@@ -9,7 +9,7 @@ export const buildPlantDetailDto = (plant)=>({
     plantCategory: plant.category,
     plantTags: plant.tags,
     careInstructions: plant.care_instructions,
-    averageRating: plant.average_rating,
+    averageRating: plant.avg_rating,
     createdAt: plant.created_at,
     updatedAt: plant.updated_at,
 })

@@ -1,11 +1,11 @@
 import express from "express";
 
 // Import controllers
-import { getAllreviewsByPlantId , addReviewToDatabase} from "../controllers/reviewController.js";
+import { getAllReviewsByPlantId , addReviewToDatabase} from "../controllers/reviewController.js";
 
 const reviewsRouter = express.Router();
 
-reviewsRouter.get("/:plantId", getAllreviewsByPlantId);
+reviewsRouter.get("/:plantId", getAllReviewsByPlantId);
 
 reviewsRouter.post("/", addReviewToDatabase);
 

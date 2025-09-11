@@ -1,5 +1,5 @@
 export const buildReviewDto = (review) => ({
-  reviewId: review.id,
+  id: review.id,
   plantId: review.plant_id,
   userId: review.user_id,
   rating: review.rating,

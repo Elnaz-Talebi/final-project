@@ -1,9 +1,8 @@
 import db from "../db_connection.js";
 import { buildReviewDto } from "../dtos/buildReviewDto.js";
 import { checkReviewInputsValidation } from "../utils/checkReviewInputsValidation.js";
-import { updatePlantAverageRating } from "../utils/updatePlantAverageRating.js";
 
-export const getAllreviewsByPlantId = async (req, res) => {
+export const getAllReviewsByPlantId = async (req, res) => {
   try {
     const plantId = parseInt(req.params.plantId);
     if (!plantId || isNaN(plantId) || plantId < 1) {
@@ -11,9 +10,7 @@ export const getAllreviewsByPlantId = async (req, res) => {
     }
     const result = await db("reviews").select("*").where({ plant_id: plantId });
 
-    console.log(result);
-
-    if (!result) {
+    if (result.length === 0) {
       return res.status(404).json({ message: "No review found" });
     }
 
@@ -21,7 +18,7 @@ export const getAllreviewsByPlantId = async (req, res) => {
 
     res.json(reviews);
   } catch (err) {
-    console.error("Error fetching plants:", err);
+    console.error("Error fetching reviews:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -36,16 +33,11 @@ export const addReviewToDatabase = async (req, res) => {
 
     const { plantId, userId, rating, comment } = parsedInputs.data;
 
-    // ******** TODO : Modify db (average_rating is not in the fiels of plants table)  *********
-
-    // calculate the new average rating
-    // updatePlantAverageRating(plantId, rating);
-
     const [review] = await db("reviews")
       .insert({ plant_id: plantId, user_id: userId, rating, comment })
-      .returning("id");
+      .returning("*");
 
-    res.status(201).json(review);
+    res.status(201).json(buildReviewDto(review));
   } catch (err) {
     console.error("Error creating review:", err);
     res.status(500).json({ error: "Internal server error" });
