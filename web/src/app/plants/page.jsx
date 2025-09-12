@@ -36,7 +36,7 @@ export default function PlantsPage() {
         plantName: p.plantName,
         category: "",
         price: Number(p.plantPrice),
-        averageRating: p.avg_rating,
+        averageRating: p.averageRating,
         plantDescription: p.plantDescription,
         plantImage: p.plantImage,
       }));
