@@ -1,7 +1,12 @@
 import db from "../db_connection.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import sanitizeHtml from "sanitize-html";
+import {
+  sanitizeUserInput,
+  validateUsername,
+  validateEmail,
+  validatePassword,
+} from "../utils/validationsForRegisterPage.js";
 
 const COOKIE_NAME = "auth_token";
 
@@ -16,19 +21,14 @@ const cookieOptions = {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    if (!email || !password) {
+    if (!email || !password)
       return res.status(400).json({ error: "Email and password are required" });
-    }
 
     const user = await db("users").select("*").where({ email }).first();
-    if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
+    if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
     const ok = await bcrypt.compare(password, user.password_hash);
-    if (!ok) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
+    if (!ok) return res.status(401).json({ error: "Invalid credentials" });
 
     const token = jwt.sign(
       { sub: user.id, email: user.email },
@@ -43,7 +43,7 @@ export const login = async (req, res) => {
       username: user.username || null,
       role: user.role || "user",
     });
-  } catch (err) {
+  } catch {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -73,41 +73,21 @@ export const logout = (_req, res) => {
 
 export const register = async (req, res) => {
   try {
-    let { email, password, username } = req.body || {};
+    let { email, username, password } = sanitizeUserInput(req.body || {});
 
-    username = sanitizeHtml(username || "", {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-    email = sanitizeHtml(email || "", {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-    password = sanitizeHtml(password || "", {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-
-    if (!email || !password || !username) {
-      return res
-        .status(400)
-        .json({ error: "Email, username and password are required" });
-    }
-
-    if (!/^[A-Za-z0-9]*[A-Za-z]+[A-Za-z0-9]*$/.test(username)) {
-      return res.status(400).json({
-        error:
-          "Invalid username. Must contain letters, can include numbers, no spaces or special characters.",
-      });
+    try {
+      validateUsername(username);
+      validateEmail(email);
+      validatePassword(password);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
     }
 
     const existing = await db("users").select("id").where({ email }).first();
-    if (existing) {
+    if (existing)
       return res.status(409).json({ error: "Email already in use" });
-    }
 
     const passwordHash = await bcrypt.hash(password, 10);
-
     const [created] = await db("users")
       .insert({ email, username, password_hash: passwordHash, role: "user" })
       .returning(["id", "email", "username"]);
@@ -118,7 +98,7 @@ export const register = async (req, res) => {
       username: created.username,
       role: "user",
     });
-  } catch (err) {
+  } catch {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
