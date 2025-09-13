@@ -38,24 +38,42 @@
   color: black;
 }
 
+.input_section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 350px;
+}
+
+.input_bar,
+.textarea_bar {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #dee1e6ff;
+  font-family: Inter;
+  font-size: 14px;
+  padding: 10px;
+  color: black;
+  box-sizing: border-box;
+}
+
+.input_bar {
+  height: 40px;
+}
+
+.textarea_bar {
+  height: 120px;
+  resize: none;
+  overflow-y: auto;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   margin-bottom: 100px;
-}
-
-.input_bar {
-  width: 350px;
-  height: 40px;
-  font-family: Inter;
-  font-size: 14px;
-  background-color: white;
-  border-radius: 6px;
-  border: 1px solid #dee1e6ff;
-  padding-left: 10px;
-  color: black;
 }
 
 .button {
@@ -68,13 +86,6 @@
   font-size: 16px;
   font-weight: bold;
   margin-top: 10px;
-}
-
-.input_section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
 }
 
 .modalOverlay {

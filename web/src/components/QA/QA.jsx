@@ -11,7 +11,9 @@ export default function QA() {
     success: false,
   });
   const [activeIndex, setActiveIndex] = useState(null);
+  const [faqs, setFaqs] = useState([]);
 
+  // Load user info
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -25,6 +27,20 @@ export default function QA() {
       } catch {}
     }
     fetchUser();
+  }, []);
+
+  // Load FAQs from public folder
+  useEffect(() => {
+    async function fetchFaqs() {
+      try {
+        const res = await fetch("/data/faqs.json");
+        const data = await res.json();
+        setFaqs(data);
+      } catch (err) {
+        console.error("Failed to load FAQs:", err);
+      }
+    }
+    fetchFaqs();
   }, []);
 
   function handleChange(e) {
@@ -80,59 +96,6 @@ export default function QA() {
     );
   }
 
-  const faqs = [
-    {
-      question: "How do I register an account?",
-      answer:
-        "Click on the register button in the header, fill in your details, and submit the form.",
-    },
-    {
-      question: "Is my personal information secure?",
-      answer:
-        "Yes, we use secure authentication and encryption methods to keep your data safe.",
-    },
-    {
-      question: "Can I access my account from multiple devices?",
-      answer:
-        "Yes, you can log in from any device using your email and password.",
-    },
-    {
-      question: "What should I do if I forget my password?",
-      answer:
-        "Use the 'Forgot Password' option on the login page to reset your password via email.",
-    },
-    {
-      question: "How often should I water my plants?",
-      answer:
-        "It depends on the type of plant. Most indoor plants need watering once a week, but always check the soil moisture first.",
-    },
-    {
-      question: "Which plants are best for beginners?",
-      answer:
-        "Snake plants, pothos, aloe vera, and peace lilies are great beginner-friendly options.",
-    },
-    {
-      question: "Do plants need direct sunlight?",
-      answer:
-        "Not always. Some plants like succulents need bright sunlight, while others like ferns grow well in low light.",
-    },
-    {
-      question: "How do I know if my plant is unhealthy?",
-      answer:
-        "Yellow leaves, brown spots, drooping, or slow growth can indicate issues with watering, light, or nutrients.",
-    },
-    {
-      question: "What type of soil is best for houseplants?",
-      answer:
-        "Most houseplants do well in well-draining potting mix. Succulents and cacti need sandy soil mixes.",
-    },
-    {
-      question: "How can I prevent pests on my plants?",
-      answer:
-        "Check your plants regularly, keep the leaves clean, and use natural remedies like neem oil if pests appear.",
-    },
-  ];
-
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
@@ -173,14 +136,18 @@ export default function QA() {
         </div>
         <div className={styles.input_section}>
           <label htmlFor="question">Question</label>
-          <input
-            type="text"
+          <textarea
             id="question"
             name="question"
             value={questionInfo.question}
             onChange={handleChange}
             className={styles.input_bar}
+            maxLength={500}
+            style={{ width: "100%", height: "120px", resize: "none" }}
           />
+          <p style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
+            {questionInfo.question.length}/500 characters
+          </p>
         </div>
         <button type="submit" className={styles.button}>
           Send
