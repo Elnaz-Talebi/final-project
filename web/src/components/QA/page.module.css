@@ -27,6 +27,17 @@
   margin-bottom: 20px;
 }
 
+.question {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.answer {
+  font-size: 18px;
+  margin-top: 8px;
+  color: black;
+}
+
 .form {
   display: flex;
   flex-direction: column;
