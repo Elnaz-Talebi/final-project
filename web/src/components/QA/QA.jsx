@@ -13,7 +13,6 @@ export default function QA() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [faqs, setFaqs] = useState([]);
 
-  // Load user info
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -22,14 +21,13 @@ export default function QA() {
         });
         if (!res.ok) return;
         const data = await res.json();
-        setQuestionInfo((prev) => ({ ...prev, email: data.email || "" }));
+        setQuestionInfo({ email: data.email || "", question: "" });
         setIsLoggedIn(true);
       } catch {}
     }
     fetchUser();
   }, []);
 
-  // Load FAQs from public folder
   useEffect(() => {
     async function fetchFaqs() {
       try {
@@ -82,7 +80,7 @@ export default function QA() {
         return;
       }
       showPopup("Your question has been sent!", true);
-      setQuestionInfo((prev) => ({ ...prev, question: "" }));
+      setQuestionInfo({ email: "", question: "" }); // clear both fields
     } catch {
       showPopup("Failed to send question. Try again.", false);
     }
@@ -131,7 +129,7 @@ export default function QA() {
             value={questionInfo.email}
             onChange={handleChange}
             className={styles.input_bar}
-            disabled={isLoggedIn}
+            placeholder="Enter your email"
           />
         </div>
         <div className={styles.input_section}>
@@ -141,9 +139,9 @@ export default function QA() {
             name="question"
             value={questionInfo.question}
             onChange={handleChange}
-            className={styles.input_bar}
+            className={styles.textarea_bar}
+            placeholder="Type your question here (max 500 characters)"
             maxLength={500}
-            style={{ width: "100%", height: "120px", resize: "none" }}
           />
           <p style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
             {questionInfo.question.length}/500 characters
@@ -153,6 +151,7 @@ export default function QA() {
           Send
         </button>
       </form>
+
       {popup.visible && (
         <div className={styles.modalOverlay}>
           <div
