@@ -12,10 +12,10 @@ const COOKIE_NAME = "auth_token";
 
 const cookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   secure: process.env.NODE_ENV === "production",
   path: "/",
-  maxAge: 1 * 24 * 60 * 60 * 1000,
+  maxAge: 24 * 60 * 60 * 1000,
 };
 
 export const login = async (req, res) => {
