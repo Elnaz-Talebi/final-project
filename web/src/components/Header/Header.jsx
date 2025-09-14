@@ -30,6 +30,7 @@ export default function Header() {
       setUser(data);
     }
     fetchMe();
+    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -85,18 +86,23 @@ export default function Header() {
         {user && (
           <div className={styles.profile_wrapper} ref={menuRef}>
             <Link href="/">
-              <ShoppingBasket className={styles.basket_icon} />
+              <ShoppingBasket
+                className={styles.basket_icon}
+                color="#565d6dff"
+                strokeWidth={1.5}
+              />
             </Link>
+            <span className={styles.username}>
+              {user.username || user.email}
+            </span>
             <CircleUserRound
               className={styles.profile_button}
+              color="#565d6dff"
+              strokeWidth={1.5}
               onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={open}
-            >
-              <span className={styles.username}>
-                {user.username || user.email}
-              </span>
-            </CircleUserRound>
+            ></CircleUserRound>
             {open && (
               <div className={styles.dropdown} role="menu">
                 {user.role === "admin" && (

@@ -49,38 +49,36 @@ export default function PlantCard({
   }
 
   return (
-    <div>
-      <div className={styles.card}>
-        <Link href={`/plants/${id}`}>
-          <img src={imageUrl} className={styles.card_image} />
-        </Link>
-        <Link href={`/plants/${id}`}>
-          <div className={styles.card_info}>
-            <div>{renderStars(averageRating)}</div>
-            <h2 className={styles.h2}>{name}</h2>
-            <p className={styles.price}>{price} DKK</p>
-          </div>
-        </Link>
-        <div className={styles.card_buttons}>
-          {inCart ? (
-            <button onClick={changeCart} className={styles.in_cart_button}>
-              In Cart
-            </button>
-          ) : (
-            <button onClick={changeCart} className={styles.add_to_cart_button}>
-              Add to Cart
-            </button>
-          )}
-          {favorite ? (
-            <button onClick={changeFavorite} className={styles.favorite}>
-              <Heart/>
-            </button>
-          ) : (
-            <button onClick={changeFavorite} className={styles.not_favorite}>
-              <Heart/>
-            </button>
-          )}
+    <div className={styles.card}>
+      <Link href={`/plants/${id}`}>
+        <img src={imageUrl} className={styles.card_image} />
+      </Link>
+      <Link href={`/plants/${id}`}>
+        <div className={styles.card_info}>
+          <div>{renderStars(averageRating)}</div>
+          <h2 className={styles.h2}>{name}</h2>
+          <p className={styles.price}>{price} DKK</p>
         </div>
+      </Link>
+      <div className={styles.card_buttons}>
+        {inCart ? (
+          <button onClick={changeCart} className={styles.in_cart_button}>
+            In Cart
+          </button>
+        ) : (
+          <button onClick={changeCart} className={styles.add_to_cart_button}>
+            Add to Cart
+          </button>
+        )}
+        {favorite ? (
+          <button onClick={changeFavorite} className={styles.favorite}>
+            <Heart />
+          </button>
+        ) : (
+          <button onClick={changeFavorite} className={styles.not_favorite}>
+            <Heart />
+          </button>
+        )}
       </div>
     </div>
   );
