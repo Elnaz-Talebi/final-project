@@ -34,7 +34,7 @@
 
 .nav {
   display: flex;
-  gap: 10px;
+  gap: 30px;
   font-size: 16px;
   font-weight: bold;
 }
@@ -47,26 +47,6 @@
 .nav a:hover {
   color: #48a830ff;
   text-decoration: none;
-}
-
-.nav a.disabled {
-  pointer-events: none;
-  text-decoration: none;
-}
-
-.header_container a.disabled {
-  pointer-events: none;
-}
-
-/*it's unused right now, but it should be here if we want to return search bar in header*/
-.header_search {
-  height: 36px;
-  width: 256px;
-  border-radius: 6px;
-  padding-left: 34px;
-  border-color: #dee1e6ff;
-  background-color: white;
-  color: black;
 }
 
 .login_button {
@@ -136,15 +116,17 @@
 }
 
 .dropdown_item {
+    width: 100%;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
 }
 
-.icon_and_text{
+.icon_and_text div{
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  justify-content: center;
+  gap: 5px;
 }
 
 .dropdown_item:hover {
@@ -169,4 +151,45 @@
     margin-right: 5px;
     width: 40px;
     height: 40px;
+}
+
+.menu{
+  display: none;
+}
+
+
+@media (max-width: 768px){
+  .header_container{
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .header_image{
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+  }
+
+  .logo_text{
+    font-size: 18px;
+    margin-left: -10px;
+  }
+
+  .nav{
+    display: none;
+  }
+
+  .menu{
+    display: block;
+    height: 30px;
+    width: 30px;
+    color: #565d6dff;
+  }
+
+  .dropdown{
+    right: 7%;
+    display: flex;
+    flex-direction: column;
+    animation: none;
+  }
 }
