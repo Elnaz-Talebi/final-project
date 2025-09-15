@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
+import Reviews from "../Review/Reviews";
 
 export default function PlantInfo({ plant }) {
   console.log("plant:", plant);
@@ -16,9 +17,15 @@ export default function PlantInfo({ plant }) {
         </div>
 
         <div className={styles.info}>
-          <h1 className={styles.plantName}>{plant.plantName}</h1>
-          <p className={styles.plantDescription}>{plant.plantDescription}</p>
-          <p className={styles.plantPrice}>${plant.plantPrice}</p>
+          <div>
+            <h1 className={styles.plantName}>{plant.plantName}</h1>
+            <p className={styles.plantDescription}>{plant.plantDescription}</p>
+            <p className={styles.plantPrice}>${plant.plantPrice}</p>
+          </div>
+
+          <div className={styles.separator}>
+            <Reviews plantId={plant.plantId} />
+          </div>
         </div>
       </div>
     </div>
