@@ -4,7 +4,9 @@ import {
   getLimitedTopRatePlantsCard,
   getPlantsCardPage,
   getPlantById,
+  insertPlantOnlyAdmin,
 } from "../controllers/plantController.js";
+import { adminOnly } from "../middleware/insertPlantAdminOnlyMiddleWare.js";
 
 const plantsRouter = express.Router();
 
@@ -23,5 +25,8 @@ plantsRouter.get("/limited-top-rating/:limit", getLimitedTopRatePlantsCard);
 //   - pageSize (number, optional, default = 10, max = 50) → how many plants per page
 // Example: GET /plants?page=2&pageSize=10 → returns plants 11–20
 plantsRouter.get("/", getPlantsCardPage);
+
+// POST insert plant (admin only)
+plantsRouter.post("/addPlants", adminOnly, insertPlantOnlyAdmin);
 
 export default plantsRouter;

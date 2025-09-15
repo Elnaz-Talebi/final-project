@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import "./globals.css";
+import { Suspense } from "react";
+import Loading from "../components/Loading/Loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +27,9 @@ export default function RootLayout({ children }) {
       <link rel="icon" href="./favicon.ico" />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
-        <main>{children}</main>
+        <Suspense fallback={<Loading />}>
+          <main>{children}</main>
+        </Suspense>
         <Footer />
       </body>
     </html>

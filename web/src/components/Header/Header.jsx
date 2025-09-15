@@ -3,7 +3,13 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Heart, LogOut, Plus, ShoppingBasket, CircleUserRound } from "lucide-react";
+import {
+  Heart,
+  LogOut,
+  Plus,
+  ShoppingBasket,
+  CircleUserRound,
+} from "lucide-react";
 
 export default function Header() {
   const [user, setUser] = useState(null);
@@ -24,6 +30,7 @@ export default function Header() {
       setUser(data);
     }
     fetchMe();
+    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -60,7 +67,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <img src="./logo_everleaf.png" className={styles.header_image} />
+        <img src="/logo_everleaf.png" className={styles.header_image} />
         <p className={styles.logo_text}>EverLeaf</p>
       </div>
       <nav className={styles.nav}>
@@ -79,52 +86,56 @@ export default function Header() {
         {user && (
           <div className={styles.profile_wrapper} ref={menuRef}>
             <Link href="/">
-              <ShoppingBasket className={styles.basket_icon} />
+              <ShoppingBasket
+                className={styles.basket_icon}
+                color="#565d6dff"
+                strokeWidth={1.5}
+              />
             </Link>
+            <span className={styles.username}>
+              {user.username || user.email}
+            </span>
             <CircleUserRound
               className={styles.profile_button}
+              color="#565d6dff"
+              strokeWidth={1.5}
               onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={open}
-            >
-              <span className={styles.username}>
-                {user.username || user.email}
-              </span>
-              <img src="./user_icon.png" className={styles.header_image} />
-            </CircleUserRound>
+            ></CircleUserRound>
             {open && (
               <div className={styles.dropdown} role="menu">
                 {user.role === "admin" && (
-                 <div className={styles.dropdown_item}>
-                  <Link
-                    href="/plantinsertform"
-                    className={styles.icon_and_text}
-                    onClick={() => setOpen(false)}
-                  >
-                    <Plus size={16} />
-                    Insert Plant
-                  </Link>
-              </div>
+                  <div className={styles.dropdown_item}>
+                    <Link
+                      href="/plantinsertform"
+                      className={styles.icon_and_text}
+                      onClick={() => setOpen(false)}
+                    >
+                      <Plus size={16} />
+                      Insert Plant
+                    </Link>
+                  </div>
                 )}
                 <div className={styles.dropdown_item}>
-                <Link
-                  className={styles.icon_and_text}
-                  href="/favorites"
-                  onClick={() => setOpen(false)}
-                >
-                  <Heart size={16} />
-                  Favorites
-                </Link>
+                  <Link
+                    className={styles.icon_and_text}
+                    href="/favorites"
+                    onClick={() => setOpen(false)}
+                  >
+                    <Heart size={16} />
+                    Favorites
+                  </Link>
                 </div>
                 <div className={styles.dropdown_item}>
-                <Link
-                  href="/"
-                  className={styles.icon_and_text}
-                  onClick={handleLogout}
-                >
-                  <LogOut size={16} />
-                  Logout
-                </Link>
+                  <Link
+                    href="/"
+                    className={styles.icon_and_text}
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={16} />
+                    Logout
+                  </Link>
                 </div>
               </div>
             )}
