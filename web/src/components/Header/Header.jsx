@@ -78,15 +78,15 @@ export default function Header() {
       <div className={styles.header_container}>
         {!user && (
           <div className={styles.header_container}>
-            <Link href="/user/login">
-              <button className={styles.login_button}>Login</button>
-            </Link>
             <Link href="/">
               <ShoppingBasket
                 className={styles.basket_icon}
                 color="#565d6dff"
                 strokeWidth={1.5}
               />
+            </Link>
+            <Link href="/user/login">
+              <button className={styles.login_button}>Login</button>
             </Link>
           </div>
         )}
