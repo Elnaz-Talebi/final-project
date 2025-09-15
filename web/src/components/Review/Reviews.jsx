@@ -7,7 +7,7 @@ import Loading from "../Loading/Loading";
 import DisplayReviews from "./DisplayReviews";
 import styles from "./page.module.css";
 
-export default function Reviews({ plantId, userId }) {
+export default function Reviews({ plantId }) {
   const [reviews, setReviews] = useState([]);
   const [displayReviews, setDisplayReview] = useState(true);
   const [displayAddReviewForm, setDisplayAddReviewForm] = useState(false);
@@ -25,7 +25,7 @@ export default function Reviews({ plantId, userId }) {
       const res = await response.json();
       setReviews(res);
     } catch (error) {
-      console.error("Error fetching reviews:", err);
+      console.error("Error fetching reviews:", error);
     } finally {
       setLoading(false);
     }
@@ -37,12 +37,58 @@ export default function Reviews({ plantId, userId }) {
     }
   }, [plantId]);
 
+
+const handleNewReviewAdded = (newReview , message) => {
+
+  setReviews((prevReviews) => [ newReview , ...prevReviews]);
+  setDisplayReview(true);
+  setDisplayAddReviewForm(false);
+  alert(message);
+}
+
+
+
   if (loading) {
     return <Loading />;
   }
 
   if (reviews.length === 0) {
-    return <div>There are no reviews yet</div>;
+    return (
+      <>
+        <h2 className={styles.title}>Reviews</h2>
+
+        <p>There are no reviews yet</p>
+
+        {!displayAddReviewForm && (
+          <button
+            type="button"
+            onClick={() => {
+              setDisplayAddReviewForm(true);
+              setDisplayReview(false);
+            }}
+            className={styles.addReviewBtn}
+          >
+            Add Review
+          </button>
+        )}
+
+        {displayAddReviewForm && (
+        <>
+          <ReviewForm plantId={plantId}  onNewReviewAdded={handleNewReviewAdded}/>
+          <button
+            type="button"
+            onClick={() => {
+              setDisplayAddReviewForm(false);
+              setDisplayReview(true);
+            }}
+            className={styles.backToReviewsBtn}
+          >
+            Back
+          </button>
+        </>
+      )}
+      </>
+    );
   }
 
   return (
@@ -65,7 +111,7 @@ export default function Reviews({ plantId, userId }) {
 
       {displayAddReviewForm && (
         <>
-          <ReviewForm plantId={plantId} userId={userId} />
+          <ReviewForm plantId={plantId}  onNewReviewAdded={handleNewReviewAdded}/>
           <button
             type="button"
             onClick={() => {

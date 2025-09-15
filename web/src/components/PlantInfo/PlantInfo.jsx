@@ -17,15 +17,14 @@ export default function PlantInfo({ plant }) {
         </div>
 
         <div className={styles.info}>
-          <div  className={styles.separator}>
+          <div>
             <h1 className={styles.plantName}>{plant.plantName}</h1>
             <p className={styles.plantDescription}>{plant.plantDescription}</p>
             <p className={styles.plantPrice}>${plant.plantPrice}</p>
           </div>
 
-          <div  className={styles.separator}>
-            {/* TODO :::  Set up userId */}
-            <Reviews plantId={plant.plantId} userId={1} />
+          <div className={styles.separator}>
+            <Reviews plantId={plant.plantId} />
           </div>
         </div>
       </div>

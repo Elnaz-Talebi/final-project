@@ -5,11 +5,9 @@ export async function SubmitReviewForm(formData) {
   const rating = formData.get("rating");
 
   const plantId = formData.get("plant-id");
-  const userId = formData.get("user-id");
 
   const reviewData = {
     plantId: Number(plantId),
-    userId: Number(userId),
     comment,
     rating: Number(rating),
   };
@@ -37,7 +35,11 @@ export async function SubmitReviewForm(formData) {
       throw new Error(data.error || "Unknown server error");
     }
 
-    return { success: true, message: data.message };
+    return {
+      success: true,
+      review: data,
+      message: "Review submitted successfully!",
+    };
   } catch (error) {
     console.error("Error sending review:", error);
     return {
