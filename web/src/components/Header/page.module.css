@@ -4,19 +4,19 @@
   src: url("Borel-Regular.ttf");
 }
 
-.header{
-    top: 0;
-    position: sticky;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 7%;
-    box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f14;
-    background-color: white;
-    color: rgb(23 23 23);
-    z-index: 1;
+.header {
+  top: 0;
+  position: sticky;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 7%;
+  box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f14;
+  background-color: white;
+  color: rgb(23 23 23);
+  z-index: 1;
 }
 
 .header_container {
@@ -26,10 +26,10 @@
   gap: 10px;
 }
 
-.header_image{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
+.header_image {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 
 .nav {
@@ -68,9 +68,9 @@
 
 /* Profile dropdown */
 .profile_wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .profile_button {
@@ -92,37 +92,36 @@
 }
 
 .dropdown {
-    position: absolute;
-    top: 90px;
-    right: 75px;
-    background-color: white;
-    border: #171a1f solid 1px;
-    border-radius: 10px;
-    transition-duration: 1s;
-    transition-timing-function: ease-in-out;
-    animation-iteration-count: 1;
-    animation-duration: 1s;
-    animation-name: showing;
+  position: absolute;
+  top: 90px;
+  right: 75px;
+  background-color: white;
+  border: #171a1f solid 1px;
+  border-radius: 10px;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 1s;
+  animation-name: showing;
 }
 
-
-@keyframes showing{
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 100%;
-    }
+@keyframes showing {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
 
 .dropdown_item {
-    width: 100%;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
 }
 
-.icon_and_text div{
+.icon_and_text div {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -130,63 +129,62 @@
 }
 
 .dropdown_item:hover {
-    background-color: rgb(130, 202, 111);
-    color: white;
-    animation-name: changeColor;
-    animation-duration: 1s;
+  background-color: rgb(130, 202, 111);
+  color: white;
+  animation-name: changeColor;
+  animation-duration: 1s;
 }
 
 @keyframes changeColor {
-    0%{
-        background-color: white;
-        color:#171a1f;
-    }
-    100%{
-        background-color: rgb(130, 202, 111);
-        color: white;
-    }
+  0% {
+    background-color: white;
+    color: #171a1f;
+  }
+  100% {
+    background-color: rgb(130, 202, 111);
+    color: white;
+  }
 }
 
-.basket_icon{
-    margin-right: 5px;
-    width: 40px;
-    height: 40px;
+.basket_icon {
+  margin-right: 5px;
+  width: 40px;
+  height: 40px;
 }
 
-.menu{
+.menu {
   display: none;
 }
 
-
-@media (max-width: 768px){
-  .header_container{
+@media (max-width: 768px) {
+  .header_container {
     flex-direction: row;
     gap: 10px;
   }
 
-  .header_image{
+  .header_image {
     width: 40px;
     height: 40px;
     margin-top: 5px;
   }
 
-  .logo_text{
+  .logo_text {
     font-size: 18px;
     margin-left: -10px;
   }
 
-  .nav{
+  .nav {
     display: none;
   }
 
-  .menu{
+  .menu {
     display: block;
     height: 30px;
     width: 30px;
     color: #565d6dff;
   }
 
-  .dropdown{
+  .dropdown {
     right: 7%;
     display: flex;
     flex-direction: column;
