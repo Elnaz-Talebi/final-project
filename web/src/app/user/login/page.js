@@ -59,7 +59,7 @@ export default function LoginPage() {
         </button>
       </form>
       <a href="/user/register" className={styles.a}>
-        <p>Don&apos;t have an account?</p>
+        {"If you don't have account, so sign up"}
       </a>
     </div>
   );
