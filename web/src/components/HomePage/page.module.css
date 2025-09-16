@@ -108,7 +108,58 @@
 .catalog {
   display: flex;
   justify-content: space-between;
-  gap: 25px;
+  align-items: flex-end;
+  gap: 10px;
   flex-wrap: wrap;
-  margin: 40px 100px;
+  margin: 40px 7%;
+}
+
+@media (max-width: 900px){
+  .intro{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .intro_photo{
+    order: -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px){
+  .intro{
+    margin: 0;
+    padding: 10px 7%;
+  }
+
+  .intro_photo{
+    height: 100%;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .intro_text h1{
+    margin-top: 0px;
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  .intro_text p{
+    font-size: 16px;
+  }
+
+  .catalog{
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 7%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
 }
