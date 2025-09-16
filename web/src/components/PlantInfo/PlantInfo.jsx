@@ -17,7 +17,7 @@ export default function PlantInfo({ plant }) {
         </div>
 
         <div className={styles.info}>
-          <div>
+          <div className={styles.info_text}>
             <h1 className={styles.plantName}>{plant.plantName}</h1>
             <p className={styles.plantDescription}>{plant.plantDescription}</p>
             <p className={styles.plantPrice}>${plant.plantPrice}</p>

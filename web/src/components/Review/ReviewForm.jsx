@@ -3,12 +3,12 @@ import { useActionState } from "react";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
-export default function ReviewForm({ plantId , onNewReviewAdded }) {
+export default function ReviewForm({ plantId, onNewReviewAdded }) {
   const [message, formAction] = useActionState(async (prevState, formData) => {
     const res = await SubmitReviewForm(formData);
 
-    if (res.review){
-      onNewReviewAdded(res.review,(res.message || "Review submitted!"));
+    if (res.review) {
+      onNewReviewAdded(res.review, res.message || "Review submitted!");
     }
     return res.message;
   }, null);
@@ -17,7 +17,7 @@ export default function ReviewForm({ plantId , onNewReviewAdded }) {
   const [comment, setComment] = useState("");
 
   return (
-    <form action={formAction}>
+    <form action={formAction} className={styles.form}>
       <input type="hidden" name="plant-id" value={plantId} />
       <textarea
         id="comment"
