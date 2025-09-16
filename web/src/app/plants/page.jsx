@@ -34,7 +34,7 @@ export default function PlantsPage() {
       const formatted = data.plants.map((p) => ({
         plantId: p.plantId,
         plantName: p.plantName,
-        category: "",
+        category: p.category,
         price: Number(p.plantPrice),
         averageRating: p.averageRating,
         plantDescription: p.plantDescription,
@@ -95,6 +95,7 @@ export default function PlantsPage() {
                 price={plant.price}
                 imageUrl={plant.plantImage}
                 averageRating={plant.averageRating}
+                category={plant.category}
               />
             ))
           )}

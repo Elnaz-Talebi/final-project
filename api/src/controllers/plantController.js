@@ -13,7 +13,9 @@ export const getAllPlantsCard = async (req, res) => {
       "name",
       "description",
       "price",
-      "image_url"
+      "image_url",
+      "category",
+      "avg_rating"
     );
 
     if (!result || result.length === 0) {
@@ -24,6 +26,52 @@ export const getAllPlantsCard = async (req, res) => {
     res.json(plants);
   } catch (err) {
     console.error("Error fetching plants:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Controller for searching in the plants (cards only)
+
+export const searchPlantsCard = async (req, res) => {
+  try {
+    let { q } = req.query;
+
+    if (!q || q.trim() === "") {
+      return res.status(400).json({ message: "Search query cannot be empty" });
+    }
+
+    q = sanitizeHtml(q, {
+      allowedTags: [],
+      allowedAttributes: {},
+    }).trim();
+
+    const result = await db("plants")
+      .select(
+        "id",
+        "name",
+        "description",
+        "price",
+        "image_url",
+        "category",
+        "avg_rating"
+      )
+      .whereILike("name", `%${q}%`)
+      .orWhereILike("description", `%${q}%`);
+
+    const plants = result.map((plant) => buildPlantCardDto(plant));
+
+    if (!plants || plants.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `No plants found matching '${q}'` });
+    }
+
+    res.json({
+      totalResults: plants.length,
+      plants: plants,
+    });
+  } catch (err) {
+    console.error("Error searching plants:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -88,11 +136,20 @@ export const getPlantsCardPage = async (req, res) => {
     const offset = (page - 1) * pageSize;
 
     const result = await db("plants")
-      .select("id", "name", "description", "price", "image_url")
+      .select(
+        "id",
+        "name",
+        "description",
+        "price",
+        "image_url",
+        "category",
+        "avg_rating"
+      )
       .limit(pageSize)
       .offset(offset);
 
     const plants = result.map((plant) => buildPlantCardDto(plant));
+
     const totalResults = await db("plants").count("id as count").first();
 
     if (!plants || plants.length === 0) {

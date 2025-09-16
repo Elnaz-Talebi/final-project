@@ -11,6 +11,7 @@ export default function PlantCard({
   price,
   imageUrl,
   averageRating,
+  category,
 }) {
   const [favorite, setFavorite] = useState(false);
   const [inCart, addToCart] = useState(false);
@@ -34,7 +35,6 @@ export default function PlantCard({
   function renderStars(rating) {
     const stars = [];
     const convertedRating = parseInt(rating, 10);
-    console.log(rating, convertedRating);
     for (let i = 0; i < 5; i++) {
       stars.push(
         <span
