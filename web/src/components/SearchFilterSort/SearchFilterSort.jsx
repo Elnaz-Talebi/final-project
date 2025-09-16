@@ -37,7 +37,6 @@ export default function SearchFilterSort({
 
   const getLocallyFilteredPlants = () => {
     let result = [...plants];
-
     if (selectedCategory) {
       result = result.filter(
         (p) =>
@@ -76,7 +75,7 @@ export default function SearchFilterSort({
         selectedPrice,
         selectedSort
       );
-  }, [plants, selectedCategory, selectedPrice, selectedSort]);
+  }, [plants, searchTerm, selectedCategory, selectedPrice, selectedSort]);
 
   const handleSearchClick = () => {
     if (searchTerm.trim() !== "") {

@@ -86,18 +86,20 @@ export default function HomePage() {
 
       <div id="catalog">
         <div className={styles.catalog}>
-          {randomPlants.map((plant) => (
-            <PlantCard
-              key={plant.plantId}
-              id={plant.plantId}
-              name={plant.plantName}
-              description={plant.plantDescription}
-              price={plant.price}
-              imageUrl={plant.plantImage}
-              averageRating={plant.averageRating}
-              category={plant.category}
-            />
-          ))}
+          {(filteredPlants.length > 0 ? filteredPlants : randomPlants).map(
+            (plant) => (
+              <PlantCard
+                key={plant.plantId}
+                id={plant.plantId}
+                name={plant.plantName}
+                description={plant.plantDescription}
+                price={plant.price}
+                imageUrl={plant.plantImage || null}
+                averageRating={plant.averageRating}
+                category={plant.category}
+              />
+            )
+          )}
         </div>
       </div>
     </div>
