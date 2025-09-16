@@ -68,22 +68,41 @@
   resize: vertical;
 }
 
-.submitButton {
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.buttonGroup button {
   width: 200px;
-  align-self: center;
   padding: 12px 20px;
   font-size: 16px;
   font-weight: bold;
-  background-color: #48a830;
-  color: white;
-  border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
+.submitButton {
+  background-color: #48a830;
+  color: white;
+  border: none;
+}
+
 .submitButton:hover {
   background-color: #3d8a28;
+}
+
+.closeButton {
+  background-color: #ccc;
+  color: #171a1f;
+  border: none;
+}
+
+.closeButton:hover {
+  background-color: #999;
 }
 
 .insertPlantContainer p {
@@ -102,14 +121,17 @@
 @media (max-width: 768px) {
   .insertPlantContainer {
     padding: 15px 20px;
-  }
-
-  .submitButton {
-    width: 100%;
-  }
-
-  .insertPlantContainer {
     width: 87%;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .buttonGroup button {
+    width: 100%;
   }
 
   .insertPlantContainer h1 {
