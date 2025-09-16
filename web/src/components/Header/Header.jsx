@@ -1,7 +1,6 @@
 "use client";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   Heart,
@@ -9,11 +8,13 @@ import {
   Plus,
   ShoppingBasket,
   CircleUserRound,
+  Menu,
 } from "lucide-react";
 
 export default function Header() {
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openedNav, setOpenedNav] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +31,6 @@ export default function Header() {
       setUser(data);
     }
     fetchMe();
-    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -76,12 +76,19 @@ export default function Header() {
         <Link href="/help">Help</Link>
       </nav>
       <div className={styles.header_container}>
-        {/*if we will need this, so you can uncomment this input. I just thought, that it has no sense to have search bar on the header, when we have it on the main page in main section */}
-        {/* <input type="text" placeholder="Search for plants..." className={styles.header_search}/> */}
         {!user && (
-          <Link href="/user/login">
-            <button className={styles.login_button}>Login</button>
-          </Link>
+          <div className={styles.header_container}>
+            <Link href="/">
+              <ShoppingBasket
+                className={styles.basket_icon}
+                color="#565d6dff"
+                strokeWidth={1.5}
+              />
+            </Link>
+            <Link href="/user/login">
+              <button className={styles.login_button}>Login</button>
+            </Link>
+          </div>
         )}
         {user && (
           <div className={styles.profile_wrapper} ref={menuRef}>
@@ -102,43 +109,57 @@ export default function Header() {
               onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={open}
-            ></CircleUserRound>
+            />
             {open && (
               <div className={styles.dropdown} role="menu">
                 {user.role === "admin" && (
-                  <div className={styles.dropdown_item}>
-                    <Link
-                      href="/plantinsertform"
-                      className={styles.icon_and_text}
-                      onClick={() => setOpen(false)}
-                    >
-                      <Plus size={16} />
-                      Insert Plant
-                    </Link>
-                  </div>
-                )}
-                <div className={styles.dropdown_item}>
                   <Link
+                    href="/plantinsertform"
                     className={styles.icon_and_text}
-                    href="/favorites"
                     onClick={() => setOpen(false)}
                   >
+                    <div className={styles.dropdown_item}>
+                      <Plus size={16} />
+                      Insert Plant
+                    </div>
+                  </Link>
+                )}
+                <Link
+                  className={styles.icon_and_text}
+                  href="/favorites"
+                  onClick={() => setOpen(false)}
+                >
+                  <div className={styles.dropdown_item}>
                     <Heart size={16} />
                     Favorites
-                  </Link>
-                </div>
-                <div className={styles.dropdown_item}>
-                  <Link
-                    href="/"
-                    className={styles.icon_and_text}
-                    onClick={handleLogout}
-                  >
+                  </div>
+                </Link>
+                <Link
+                  href="/"
+                  className={styles.icon_and_text}
+                  onClick={handleLogout}
+                >
+                  <div className={styles.dropdown_item}>
                     <LogOut size={16} />
                     Logout
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               </div>
             )}
+          </div>
+        )}
+        <Menu className={styles.menu} onClick={() => setOpenedNav((v) => !v)} />
+        {openedNav && (
+          <div className={styles.dropdown}>
+            <Link href="/" className={styles.dropdown_item}>
+              Home
+            </Link>
+            <Link href="/plants" className={styles.dropdown_item}>
+              All plants
+            </Link>
+            <Link href="/help" className={styles.dropdown_item}>
+              Help
+            </Link>
           </div>
         )}
       </div>
