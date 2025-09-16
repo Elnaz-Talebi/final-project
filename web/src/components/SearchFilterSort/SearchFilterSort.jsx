@@ -15,6 +15,8 @@ export default function SearchFilterSort({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedSort, setSelectedSort] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const filters = [
     { label: "Indoor", value: "Indoor" },
@@ -43,13 +45,11 @@ export default function SearchFilterSort({
           (p.category || "").toLowerCase() === selectedCategory.toLowerCase()
       );
     }
-
     if (selectedPrice) {
       result = result.filter(
         (p) => p.price != null && p.price <= Number(selectedPrice)
       );
     }
-
     if (selectedSort) {
       result.sort((a, b) => {
         if (selectedSort === "name")
@@ -60,11 +60,9 @@ export default function SearchFilterSort({
         return 0;
       });
     }
-
     return result;
   };
 
-  // Local filtering effect (updates live on home page)
   useEffect(() => {
     const filtered = getLocallyFilteredPlants();
     onFiltered &&
@@ -77,19 +75,64 @@ export default function SearchFilterSort({
       );
   }, [plants, searchTerm, selectedCategory, selectedPrice, selectedSort]);
 
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const fetchSearchResults = async () => {
+      try {
+        const res = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/plants/search?q=${encodeURIComponent(searchTerm)}`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) {
+          setSearchResults([]);
+          setShowDropdown(false);
+          return;
+        }
+        const data = await res.json();
+        setSearchResults(data);
+        setShowDropdown(true);
+      } catch {}
+    };
+    fetchSearchResults();
+
+    return () => controller.abort();
+  }, [searchTerm]);
+
+  const renderStars = (rating) => {
+    const stars = [];
+    const convertedRating = Math.round(rating) || 0;
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <span
+          key={i}
+          className="star"
+          style={{ color: i < convertedRating ? "#48a830ff" : "#ccc" }}
+        >
+          ★
+        </span>
+      );
+    }
+    return <div style={{ display: "flex" }}>{stars}</div>;
+  };
+
   const handleSearchClick = () => {
     if (searchTerm.trim() !== "") {
       if (navigateOnSearch) {
         const params = new URLSearchParams();
         params.set("search", searchTerm.trim());
         router.push(`${searchPath}?${params.toString()}`);
-
-        // Reset all filters and sort only on navigate
         setSelectedCategory("");
         setSelectedPrice("");
         setSelectedSort("");
       } else {
-        // Apply local filtering including search term
         const filtered = getLocallyFilteredPlants().filter((p) =>
           (p.plantName || "").toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -102,7 +145,14 @@ export default function SearchFilterSort({
             selectedSort
           );
       }
+      setShowDropdown(false);
     }
+  };
+
+  const handleSuggestionClick = (plant) => {
+    router.push(`/plants/${plant.id}`);
+    setShowDropdown(false);
+    setSearchTerm("");
   };
 
   return (
@@ -116,9 +166,22 @@ export default function SearchFilterSort({
           className={styles.search_bar}
           onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
         />
-        <button onClick={handleSearchClick} className={styles.search_icon}>
-          <Search className={styles.search_icon_img} />
-        </button>
+        {showDropdown && searchResults.length > 0 && (
+          <ul className={styles.search_dropdown}>
+            {searchResults.map((plant) => (
+              <li
+                key={plant.id}
+                onClick={() => handleSuggestionClick(plant)}
+                className={styles.search_dropdown_item}
+              >
+                <span className={styles.dropdown_name}>{plant.name}</span>
+                <div className={styles.stars_container}>
+                  {renderStars(plant.avg_rating)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div className={styles.selections}>

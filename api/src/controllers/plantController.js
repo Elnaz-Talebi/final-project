@@ -46,30 +46,23 @@ export const searchPlantsCard = async (req, res) => {
     }).trim();
 
     const result = await db("plants")
-      .select(
-        "id",
-        "name",
-        "description",
-        "price",
-        "image_url",
-        "category",
-        "avg_rating"
-      )
+      .select("id", "name", "avg_rating")
       .whereILike("name", `%${q}%`)
       .orWhereILike("description", `%${q}%`);
 
-    const plants = result.map((plant) => buildPlantCardDto(plant));
-
-    if (!plants || plants.length === 0) {
+    if (!result || result.length === 0) {
       return res
         .status(404)
         .json({ message: `No plants found matching '${q}'` });
     }
 
-    res.json({
-      totalResults: plants.length,
-      plants: plants,
-    });
+    const plants = result.map((plant) => ({
+      id: plant.id,
+      name: plant.name,
+      avg_rating: plant.avg_rating || 0,
+    }));
+
+    res.json(plants);
   } catch (err) {
     console.error("Error searching plants:", err);
     res.status(500).json({ error: "Internal server error" });
