@@ -9,7 +9,7 @@
     background-color: #48A830FF;
 }
 
-.footer div{
+.navigation{
     display: flex;
     gap: 20px;
     color: white;
@@ -17,30 +17,26 @@
     text-decoration: none;
 }
 
-.facebook_icon{
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    mask-image: url('/facebook_icon.svg');
+.links{
+    display: flex;
+    gap: 20px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
 }
 
-.twitter_icon{
+.icon{
     width: 25px;
     height: 25px;
-    background-color: white;
-    mask-image: url('/twitter_icon.svg');
 }
 
-.instagram_icon{
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    mask-image: url('/instagram_icon.svg');
-}
+@media (max-width: 768px){
+    .navigation{
+        display: none;
+    }
 
-.linkedin_icon{
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    mask-image: url('/linkedin_icon.svg');
+    .links{
+        gap: 40px;
+        margin-left: auto;
+    }
 }
