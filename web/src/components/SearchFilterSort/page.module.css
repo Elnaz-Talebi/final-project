@@ -13,24 +13,12 @@
 
 .search_bar {
   width: 100%;
-  padding: 8px 35px 8px 12px; /* space for icon */
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   outline: none;
   background-color: white;
   color: black;
-}
-
-.search_icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 16px;
-  background-color: white;
-  border: none;
-  color: #555;
 }
 
 .selections {
@@ -50,35 +38,35 @@
   border: 1px solid #dee1e6ff;
 }
 
-.search_icon_img{
+.search_icon_img {
   margin-top: 4px;
   width: 20px;
 }
 
 @media (max-width: 1200px) {
-  .inputs{
+  .inputs {
     flex-direction: column;
     gap: 15px;
     margin-top: -10px;
   }
 
-  .selections select{
+  .selections select {
     width: 26.7vw;
     font-size: 12px;
   }
 
-  .search_container{
+  .search_container {
     width: 100%;
   }
 
-  .search_bar{
+  .search_bar {
     padding-top: 15px;
     padding-bottom: 15px;
   }
 }
 
-@media (max-width: 768px){
-  .selections select{
+@media (max-width: 768px) {
+  .selections select {
     width: 25vw;
   }
 }
