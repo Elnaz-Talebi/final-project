@@ -1,13 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "./page.module.css"; // make sure to style the form
+import { useRouter } from "next/navigation";
+import styles from "./page.module.css";
 
 export default function InsertNewPlant() {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [title, setTitle] = useState("New Plant Details");
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
     description: "",
     price: "",
@@ -20,13 +25,29 @@ export default function InsertNewPlant() {
     scientific_name: "",
     family: "",
     origin: "",
-  });
+  };
 
-  const [title, setTitle] = useState("New Plant Details");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState(initialFormData);
 
-  // Fetch logged-in user
+  const fields = [
+    { name: "name", label: "Plant Name", type: "text" },
+    { name: "description", label: "Description", type: "textarea" },
+    { name: "price", label: "Price (DKK)", type: "number" },
+    { name: "image_url", label: "Image URL", type: "text" },
+    { name: "category", label: "Category", type: "text" },
+    { name: "water_schedule", label: "Water Schedule", type: "text" },
+    { name: "sunlight_exposure", label: "Sunlight Exposure", type: "text" },
+    {
+      name: "humidity_and_temperature",
+      label: "Humidity & Temperature",
+      type: "text",
+    },
+    { name: "soil_and_fertilizer", label: "Soil & Fertilizer", type: "text" },
+    { name: "scientific_name", label: "Scientific Name", type: "text" },
+    { name: "family", label: "Family", type: "text" },
+    { name: "origin", label: "Origin", type: "text" },
+  ];
+
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -47,13 +68,9 @@ export default function InsertNewPlant() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // For price, remove any non-digit characters except dot
-    if (name === "price") {
-      const numericValue = value.replace(/[^\d.]/g, "");
-      setFormData((prev) => ({ ...prev, [name]: numericValue }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const updatedValue =
+      name === "price" ? value.replace(/[^\d.]/g, "") : value;
+    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
 
   const handleSubmit = async (e) => {
@@ -71,26 +88,11 @@ export default function InsertNewPlant() {
           body: JSON.stringify(formData),
         }
       );
-
       const data = await res.json();
-
       if (res.ok) {
         setMessage(data.message);
         setTitle("Add Another Plant");
-        setFormData({
-          name: "",
-          description: "",
-          price: "",
-          image_url: "",
-          category: "",
-          water_schedule: "",
-          sunlight_exposure: "",
-          humidity_and_temperature: "",
-          soil_and_fertilizer: "",
-          scientific_name: "",
-          family: "",
-          origin: "",
-        });
+        setFormData(initialFormData);
       } else {
         setError(data.error || "Something went wrong");
       }
@@ -98,6 +100,8 @@ export default function InsertNewPlant() {
       setError("Something went wrong");
     }
   };
+
+  const handleClose = () => router.back();
 
   if (loadingUser) return <p>Loading user...</p>;
   if (!user || user.role !== "admin")
@@ -110,166 +114,44 @@ export default function InsertNewPlant() {
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleSubmit} className={styles.plantForm}>
-        <div className={styles.formGroup}>
-          <label htmlFor="name">Plant Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter plant name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {fields.map((field) => (
+          <div key={field.name} className={styles.formGroup}>
+            <label htmlFor={field.name}>{field.label}</label>
+            {field.type === "textarea" ? (
+              <textarea
+                id={field.name}
+                name={field.name}
+                placeholder={`Enter ${field.label.toLowerCase()}`}
+                value={formData[field.name]}
+                onChange={handleChange}
+                required
+              />
+            ) : (
+              <input
+                type={field.type}
+                id={field.name}
+                name={field.name}
+                placeholder={`Enter ${field.label.toLowerCase()}`}
+                value={formData[field.name]}
+                onChange={handleChange}
+                required
+              />
+            )}
+          </div>
+        ))}
 
-        <div className={styles.formGroup}>
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Enter plant description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
+        <div className={styles.buttonGroup}>
+          <button type="submit" className={styles.submitButton}>
+            Insert Plant
+          </button>
+          <button
+            type="button"
+            className={styles.submitButton}
+            onClick={handleClose}
+          >
+            Close
+          </button>
         </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="price">Price (DKK)</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            placeholder="100"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="image_url">Image URL</label>
-          <input
-            type="text"
-            id="image_url"
-            name="image_url"
-            placeholder="Enter image URL"
-            value={formData.image_url}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="category">Category</label>
-          <input
-            type="text"
-            id="category"
-            name="category"
-            placeholder="Enter category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="water_schedule">Water Schedule</label>
-          <input
-            type="text"
-            id="water_schedule"
-            name="water_schedule"
-            placeholder="Enter water schedule"
-            value={formData.water_schedule}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="sunlight_exposure">Sunlight Exposure</label>
-          <input
-            type="text"
-            id="sunlight_exposure"
-            name="sunlight_exposure"
-            placeholder="Enter sunlight exposure"
-            value={formData.sunlight_exposure}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="humidity_and_temperature">
-            Humidity & Temperature
-          </label>
-          <input
-            type="text"
-            id="humidity_and_temperature"
-            name="humidity_and_temperature"
-            placeholder="Enter humidity & temperature"
-            value={formData.humidity_and_temperature}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="soil_and_fertilizer">Soil & Fertilizer</label>
-          <input
-            type="text"
-            id="soil_and_fertilizer"
-            name="soil_and_fertilizer"
-            placeholder="Enter soil & fertilizer info"
-            value={formData.soil_and_fertilizer}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="scientific_name">Scientific Name</label>
-          <input
-            type="text"
-            id="scientific_name"
-            name="scientific_name"
-            placeholder="Enter scientific name"
-            value={formData.scientific_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="family">Family</label>
-          <input
-            type="text"
-            id="family"
-            name="family"
-            placeholder="Enter family"
-            value={formData.family}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="origin">Origin</label>
-          <input
-            type="text"
-            id="origin"
-            name="origin"
-            placeholder="Enter origin"
-            value={formData.origin}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit" className={styles.submitButton}>
-          Insert Plant
-        </button>
       </form>
     </main>
   );
