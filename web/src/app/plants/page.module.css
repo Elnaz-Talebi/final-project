@@ -22,15 +22,16 @@
   font-family: Lora, serif;
   font-size: 45px;
   color: #171a1fff;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   text-align: center;
 }
 
 .plant_grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 10px;
   justify-content: space-between;
+  align-items: flex-end;
 }
 
 .error {
@@ -71,11 +72,6 @@
 
 .button:hover {
   background-color: #3d8a28ff;
-}
-
-.button:disabled {
-  background-color: #a5a5a5;
-  cursor: not-allowed;
 }
 
 .pagination {
@@ -119,17 +115,38 @@
 
 /* Optional responsive adjustments */
 @media (max-width: 1200px) {
-  .plant_page {
-    padding: 50px 50px;
-  }
+
   .plant_grid {
-    gap: 20px;
+    gap: 40px;
     justify-content: center;
+  }
+
+  .pagination{
+    margin-top: 60px;
   }
 }
 
 @media (max-width: 768px) {
   .plant_page h1 {
     font-size: 36px;
+    margin-top: -20px;
+  }
+
+  .pagination{
+    margin-top: 40px;
+  }
+
+  .paginationButton{
+    width: 70vw;
+  }
+
+  .pagination span{
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .plant_grid{
+    flex-direction: column;
   }
 }
