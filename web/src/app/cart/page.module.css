@@ -1,0 +1,97 @@
+.cattTitle {
+  text-align: center;
+}
+
+.cartPage {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Left side: items */
+.cartItems {
+  flex: 3;
+}
+
+/* Right side: summary */
+.cartSummary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  height: fit-content;
+  position: sticky;
+  top: 12rem;
+}
+
+.cartSummary h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.purchaseBtn {
+  width: 200px;
+  height: 40px;
+  background-color: #48a830ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+.purchaseBtn:hover {
+  background-color: #3d8a28ff;
+}
+
+.backBtn {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  color: #48a830ff;
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid #48a830ff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 30px;
+}
+
+.emptyCart {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 2rem;
+}
+
+/*  Responsive breakpoint */
+@media (max-width: 768px) {
+  .cartPage {
+    flex-direction: column; 
+  }
+
+  .cartSummary {
+    position: static; 
+    margin-top: 2rem;
+    width: 100%; 
+  }
+
+  .purchaseBtn,
+  .backBtn {
+    width: 100%;
+    max-width: 300px; 
+  }
+}

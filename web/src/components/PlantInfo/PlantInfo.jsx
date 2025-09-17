@@ -2,6 +2,7 @@
 
 import styles from "./page.module.css";
 import Reviews from "../Review/Reviews";
+import AddToCartBtn from "@/components/Cart/AddToCartBtn";
 
 export default function PlantInfo({ plant }) {
   console.log("plant:", plant);
@@ -20,7 +21,11 @@ export default function PlantInfo({ plant }) {
           <div>
             <h1 className={styles.plantName}>{plant.plantName}</h1>
             <p className={styles.plantDescription}>{plant.plantDescription}</p>
-            <p className={styles.plantPrice}>${plant.plantPrice}</p>
+
+            <div className={styles.priceRow}>
+              <p className={styles.plantPrice}>{plant.plantPrice} DKK</p>
+              <AddToCartBtn id={plant.plantId} name={plant.plantName} price={plant.plantPrice} imageUrl={plant.plantImage}/>
+            </div>
           </div>
 
           <div className={styles.separator}>

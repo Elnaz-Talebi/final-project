@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { useState } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import AddToCartBtn from "@/components/Cart/AddToCartBtn";
 
 export default function PlantCard({
   id,
@@ -14,21 +15,12 @@ export default function PlantCard({
   category,
 }) {
   const [favorite, setFavorite] = useState(false);
-  const [inCart, addToCart] = useState(false);
 
   function changeFavorite() {
     if (favorite === false) {
       setFavorite(true);
     } else {
       setFavorite(false);
-    }
-  }
-
-  function changeCart() {
-    if (inCart === false) {
-      addToCart(true);
-    } else {
-      addToCart(false);
     }
   }
 
@@ -62,15 +54,8 @@ export default function PlantCard({
           </div>
         </Link>
         <div className={styles.card_buttons}>
-          {inCart ? (
-            <button onClick={changeCart} className={styles.in_cart_button}>
-              In Cart
-            </button>
-          ) : (
-            <button onClick={changeCart} className={styles.add_to_cart_button}>
-              Add to Cart
-            </button>
-          )}
+          <AddToCartBtn id={id} name={name} price={price} imageUrl={imageUrl} />
+
           {favorite ? (
             <button onClick={changeFavorite} className={styles.favorite}>
               <Heart className={styles.heart} />
@@ -81,18 +66,7 @@ export default function PlantCard({
             </button>
           )}
         </div>
-        {inCart ? (
-          <button onClick={changeCart} className={styles.in_cart_button_mobile}>
-            In Cart
-          </button>
-        ) : (
-          <button
-            onClick={changeCart}
-            className={styles.add_to_cart_button_mobile}
-          >
-            Add to Cart
-          </button>
-        )}
+
         {favorite ? (
           <button onClick={changeFavorite} className={styles.favorite_mobile}>
             <Heart className={styles.heart} />

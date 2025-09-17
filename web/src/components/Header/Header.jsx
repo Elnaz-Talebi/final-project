@@ -2,6 +2,7 @@
 import styles from "./page.module.css";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useCart } from "../../context/CartContext";
 import {
   Heart,
   LogOut,
@@ -16,6 +17,9 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [openedNav, setOpenedNav] = useState(false);
   const menuRef = useRef(null);
+
+  const { cart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     async function fetchMe() {
@@ -78,12 +82,19 @@ export default function Header() {
       <div className={styles.header_container}>
         {!user && (
           <div className={styles.header_container}>
-            <Link href="/">
+            <Link href="/cart">
               <ShoppingBasket
                 className={styles.basket_icon}
                 color="#565d6dff"
                 strokeWidth={1.5}
               />
+              <span
+                className={`${styles.cartTotalItems} ${
+                  totalItems > 0 ? styles.showTotalItem : ""
+                }`}
+              >
+                {totalItems}
+              </span>
             </Link>
             <Link href="/user/login">
               <button className={styles.login_button}>Login</button>
@@ -92,12 +103,22 @@ export default function Header() {
         )}
         {user && (
           <div className={styles.profile_wrapper} ref={menuRef}>
-            <Link href="/">
+            <Link href="/cart">
               <ShoppingBasket
                 className={styles.basket_icon}
                 color="#565d6dff"
                 strokeWidth={1.5}
               />
+
+              <span
+                className={`${styles.cartTotalItems} ${
+                  totalItems > 0
+                    ? styles.showTotalItem
+                    : styles.doNotshowCartTotalItems
+                }`}
+              >
+                {totalItems}
+              </span>
             </Link>
             <span className={styles.username}>
               {user.username || user.email}
