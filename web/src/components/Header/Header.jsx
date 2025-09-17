@@ -90,7 +90,9 @@ export default function Header() {
               />
               <span
                 className={`${styles.cartTotalItems} ${
-                  totalItems > 0 ? styles.showTotalItem : ""
+                  totalItems > 0
+                    ? styles.showTotalItem
+                    : styles.doNotshowCartTotalItems
                 }`}
               >
                 {totalItems}
