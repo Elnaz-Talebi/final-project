@@ -14,6 +14,23 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchMe() {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await res.json();
+      setUser(data);
+    }
+    fetchMe();
+  }, []);
 
   useEffect(() => {
     const fetchPlants = async () => {
@@ -97,6 +114,7 @@ export default function HomePage() {
                 imageUrl={plant.plantImage || null}
                 averageRating={plant.averageRating}
                 category={plant.category}
+                user={user}
               />
             )
           )}
