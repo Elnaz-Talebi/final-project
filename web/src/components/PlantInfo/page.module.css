@@ -61,6 +61,12 @@
   border: transparent;
 }
 
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 5rem; 
+}
+
 @media (max-width: 768px) {
   .plantSection {
     flex-direction: column;
