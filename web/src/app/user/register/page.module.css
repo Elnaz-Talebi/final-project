@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Lora;
+  src: url("Lora-VariableFont_wght.ttf");
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -6,7 +11,7 @@
 }
 
 .login_page {
-  height: 80vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +22,8 @@
   font-family: Lora;
   font-size: 40px;
   margin-bottom: 30px;
-  margin-top: -30px;
+  margin-top: 50px;
+  color: #48a830;
 }
 
 .input_bar {
@@ -47,6 +53,7 @@
 .a {
   color: #48a830ff;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .modalOverlay {
@@ -90,5 +97,11 @@
   100% {
     opacity: 0;
     transform: translateY(-20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .input_bar{
+    width: 85vw;
   }
 }
