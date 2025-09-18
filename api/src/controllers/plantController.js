@@ -211,26 +211,6 @@ export const insertPlantOnlyAdmin = async (req, res) => {
       allowedTags: [],
       allowedAttributes: {},
     }).trim();
-    category = sanitizeHtml(category, {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-    water_schedule = sanitizeHtml(water_schedule, {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-    sunlight_exposure = sanitizeHtml(sunlight_exposure, {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-    humidity_and_temperature = sanitizeHtml(humidity_and_temperature, {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
-    soil_and_fertilizer = sanitizeHtml(soil_and_fertilizer, {
-      allowedTags: [],
-      allowedAttributes: {},
-    }).trim();
     scientific_name = sanitizeHtml(scientific_name, {
       allowedTags: [],
       allowedAttributes: {},
