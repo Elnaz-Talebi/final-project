@@ -67,6 +67,12 @@
   border: transparent;
 }
 
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 5rem; 
+}
+
 @media (max-width: 1300px){
   .image{
     height: 87.5vh;

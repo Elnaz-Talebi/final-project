@@ -102,7 +102,7 @@ export default function QA() {
     <div className={styles.main_container}>
       <h1 className={styles.h1}>Help page</h1>
 
-      <h1 className={styles.h1}>Frequently Asked Questions</h1>
+      <h1 className={styles.h1_frequent}>Frequently Asked Questions</h1>
       {faqs.map((faq, index) => (
         <div key={index} className={styles.section}>
           <h2
