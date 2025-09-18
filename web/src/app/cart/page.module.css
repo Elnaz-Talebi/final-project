@@ -1,4 +1,10 @@
-.cattTitle {
+@font-face {
+  font-family: Inter;
+  src: url("Inter_18pt-Regular.ttf");
+}
+
+.cartTitle {
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -20,7 +26,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem;
+  padding: 2.5rem 1.5rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   background: #fafafa;
@@ -50,7 +56,7 @@
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin: 10px;
+  padding: 22px 0;
 }
 
 .purchaseBtn:hover {
@@ -58,6 +64,9 @@
 }
 
 .backBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 200px;
   height: 40px;
   background-color: white;
@@ -67,20 +76,43 @@
   border: 2px solid #48a830ff;
   border-radius: 5px;
   cursor: pointer;
-  margin: 30px;
+  padding: 20px 0;
+}
+
+.backBtn:hover{
+  background-color: rgb(240, 255, 240);
+  color: #48a830ff;
 }
 
 .emptyCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
   text-align: center;
   font-size: 1.2rem;
   color: #555;
-  margin-top: 2rem;
+}
+
+.emptyCart p{
+  margin-bottom: 20px;
+}
+
+.cartFullPage{
+  min-height: 65vh;
+  font-family: Inter;
 }
 
 /*  Responsive breakpoint */
 @media (max-width: 768px) {
   .cartPage {
     flex-direction: column; 
+    padding: 3%;
+  }
+
+  .cartTitle{
+  margin-bottom: 30px;
   }
 
   .cartSummary {
@@ -94,4 +126,6 @@
     width: 100%;
     max-width: 300px; 
   }
+
+
 }

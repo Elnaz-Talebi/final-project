@@ -57,6 +57,8 @@
   background: #f8f8f8;
   cursor: pointer;
   border-radius: 4px;
+  color: #48a830ff;
+  font-weight: bold;
 }
 
 .cartItemActions button:hover {
