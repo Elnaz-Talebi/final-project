@@ -17,6 +17,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [openedNav, setOpenedNav] = useState(false);
   const menuRef = useRef(null);
+  const navRef = useRef(null);
 
   const { cart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -54,6 +55,20 @@ export default function Header() {
       document.removeEventListener("keydown", handleEsc);
     };
   }, [open]);
+
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpenedNav(false);
+      }
+    }
+    if (openedNav) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+  }, [openedNav]);
 
   async function handleLogout() {
     try {
@@ -173,14 +188,26 @@ export default function Header() {
         )}
         <Menu className={styles.menu} onClick={() => setOpenedNav((v) => !v)} />
         {openedNav && (
-          <div className={styles.dropdown}>
-            <Link href="/" className={styles.dropdown_item}>
+          <div className={styles.dropdown} ref={navRef}>
+            <Link
+              href="/"
+              className={styles.dropdown_item}
+              onClick={() => setOpenedNav(false)}
+            >
               Home
             </Link>
-            <Link href="/plants" className={styles.dropdown_item}>
+            <Link
+              href="/plants"
+              className={styles.dropdown_item}
+              onClick={() => setOpenedNav(false)}
+            >
               All plants
             </Link>
-            <Link href="/help" className={styles.dropdown_item}>
+            <Link
+              href="/help"
+              className={styles.dropdown_item}
+              onClick={() => setOpenedNav(false)}
+            >
               Help
             </Link>
           </div>
