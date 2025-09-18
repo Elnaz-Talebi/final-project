@@ -12,13 +12,15 @@ export default function CartPage() {
       {cart.length === 0 ? (
         <div className={styles.emptyCart}>
           <p>Your Cart Is Empty</p>
-          <button type="button" className={styles.backBtn}>
-            <Link href="/plants">Back To All Plants Page</Link>
-          </button>
+          <Link href="/plants">
+            <button type="button" className={styles.backBtn}>
+              Back To All Plants Page
+            </button>
+          </Link>
         </div>
       ) : (
-        <>
-          <h1 className={styles.cattTitle}>Your Shopping Cart</h1>
+        <div className={styles.cartFullPage}>
+          <h1 className={styles.cartTitle}>Your Shopping Cart</h1>
           <div className={styles.cartPage}>
             <div className={styles.cartItems}>
               {cart.map((item) => (
@@ -31,13 +33,14 @@ export default function CartPage() {
               <button type="button" className={styles.purchaseBtn}>
                 Purchase
               </button>
-
-              <button type="button" className={styles.backBtn}>
-                <Link href="/plants">Back</Link>
-              </button>
+              <Link href="/plants">
+                <button type="button" className={styles.backBtn}>
+                  Back
+                </button>
+              </Link>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
