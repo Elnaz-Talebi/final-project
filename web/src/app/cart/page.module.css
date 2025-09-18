@@ -125,8 +125,11 @@
   .backBtn {
     width: 100%;
     max-width: 300px; 
+    min-width: 250px;
     padding: 20px 10px;
   }
 
-
+  .purchaseBtn{
+    padding: 22px 10px;
+  }
 }
