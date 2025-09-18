@@ -33,10 +33,11 @@ export default function CartPage() {
               <button type="button" className={styles.purchaseBtn}>
                 Purchase
               </button>
-
-              <button type="button" className={styles.backBtn}>
-                <Link href="/plants">Back</Link>
-              </button>
+              <Link href="/plants">
+                <button type="button" className={styles.backBtn}>
+                  Back
+                </button>
+              </Link>
             </div>
           </div>
         </div>
