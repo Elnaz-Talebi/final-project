@@ -120,7 +120,7 @@ export default function Header() {
         )}
         {user && (
           <div className={styles.profile_wrapper} ref={menuRef}>
-            <Link href="/cart">
+            <Link href="/cart" className={styles.shopping_cart}>
               <ShoppingBasket
                 className={styles.basket_icon}
                 color="#565d6dff"
