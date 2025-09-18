@@ -147,7 +147,6 @@
 }
 
 .basket_icon {
-  margin-right: 5px;
   width: 40px;
   height: 40px;
 }
@@ -190,4 +189,23 @@
     flex-direction: column;
     animation: none;
   }
+}
+
+.cartTotalItems {
+  position: relative;
+  top: -0.5rem;     
+  right: 0.35rem;  
+  background-color: #ef4444; 
+  color: #fff;     
+  font-size: 0.75rem; 
+  padding: 0.125rem 0.5rem; 
+  border-radius: 1000px; /* rounded-full */
+}
+
+.showCartTotalItems{
+  visibility: visible;
+}
+
+.doNotshowCartTotalItems{
+  visibility: hidden;
 }

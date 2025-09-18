@@ -37,16 +37,12 @@ export default function Reviews({ plantId }) {
     }
   }, [plantId]);
 
-
-const handleNewReviewAdded = (newReview , message) => {
-
-  setReviews((prevReviews) => [ newReview , ...prevReviews]);
-  setDisplayReview(true);
-  setDisplayAddReviewForm(false);
-  alert(message);
-}
-
-
+  const handleNewReviewAdded = (newReview, message) => {
+    setReviews((prevReviews) => [newReview, ...prevReviews]);
+    setDisplayReview(true);
+    setDisplayAddReviewForm(false);
+    alert(message);
+  };
 
   if (loading) {
     return <Loading />;
@@ -73,20 +69,23 @@ const handleNewReviewAdded = (newReview , message) => {
         )}
 
         {displayAddReviewForm && (
-        <>
-          <ReviewForm plantId={plantId}  onNewReviewAdded={handleNewReviewAdded}/>
-          <button
-            type="button"
-            onClick={() => {
-              setDisplayAddReviewForm(false);
-              setDisplayReview(true);
-            }}
-            className={styles.backToReviewsBtn}
-          >
-            Back
-          </button>
-        </>
-      )}
+          <div className={styles.form_container}>
+            <ReviewForm
+              plantId={plantId}
+              onNewReviewAdded={handleNewReviewAdded}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setDisplayAddReviewForm(false);
+                setDisplayReview(true);
+              }}
+              className={styles.backToReviewsBtn}
+            >
+              Back
+            </button>
+          </div>
+        )}
       </>
     );
   }
@@ -110,8 +109,11 @@ const handleNewReviewAdded = (newReview , message) => {
       )}
 
       {displayAddReviewForm && (
-        <>
-          <ReviewForm plantId={plantId}  onNewReviewAdded={handleNewReviewAdded}/>
+        <div className={styles.form_container}>
+          <ReviewForm
+            plantId={plantId}
+            onNewReviewAdded={handleNewReviewAdded}
+          />
           <button
             type="button"
             onClick={() => {
@@ -122,7 +124,7 @@ const handleNewReviewAdded = (newReview , message) => {
           >
             Back
           </button>
-        </>
+        </div>
       )}
     </>
   );

@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import AddToCartBtn from "@/components/Cart/AddToCartBtn";
 
 export default function PlantCard({
   id,
@@ -16,7 +17,6 @@ export default function PlantCard({
 }) {
   const [userData, setUser] = useState(null);
   const [favorite, setFavorite] = useState(false);
-  const [inCart, addToCart] = useState(false);
 
   useEffect(() => {
     setUser(user);
@@ -27,14 +27,6 @@ export default function PlantCard({
       setFavorite(true);
     } else {
       setFavorite(false);
-    }
-  }
-
-  function changeCart() {
-    if (inCart === false) {
-      addToCart(true);
-    } else {
-      addToCart(false);
     }
   }
 
@@ -68,41 +60,24 @@ export default function PlantCard({
           </div>
         </Link>
         <div className={styles.card_buttons}>
-          {inCart ? (
-            <button onClick={changeCart} className={styles.in_cart_button}>
-              In Cart
-            </button>
-          ) : (
-            <button onClick={changeCart} className={styles.add_to_cart_button}>
-              Add to Cart
-            </button>
-          )}
+
+          <AddToCartBtn id={id} name={name} price={price} imageUrl={imageUrl} />
+
           {user && (
-            <>  
-              {favorite ? (
-                <button onClick={changeFavorite} className={styles.favorite}>
-                  <Heart className={styles.heart} />
-                </button>
-              ) : (
-                <button onClick={changeFavorite} className={styles.not_favorite}>
-                  <Heart className={styles.heart} />
-                </button>
-              )}
+            <>
+            {favorite ? (
+              <button onClick={changeFavorite} className={styles.favorite}>
+                <Heart className={styles.heart} />
+              </button>
+            ) : (
+              <button onClick={changeFavorite} className={styles.not_favorite}>
+                <Heart className={styles.heart} />
+              </button>
+            )}
             </>
           )}
-        </div>
-        {inCart ? (
-          <button onClick={changeCart} className={styles.in_cart_button_mobile}>
-            In Cart
-          </button>
-        ) : (
-          <button
-            onClick={changeCart}
-            className={styles.add_to_cart_button_mobile}
-          >
-            Add to Cart
-          </button>
-        )}
+          </div>
+
         {user && (
           <>
           {favorite ? (
