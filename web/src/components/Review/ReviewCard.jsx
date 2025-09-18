@@ -25,7 +25,7 @@ export default function ReviewCard({ review }) {
         })}
       </div>
 
-      <p>{review.comment}</p>
+      <p className={styles.comment_text}>{review.comment}</p>
       <p>Date: {review.createdAt.slice(0, 10)}</p>
     </div>
   );
