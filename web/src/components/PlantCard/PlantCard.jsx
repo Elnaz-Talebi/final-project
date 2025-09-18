@@ -1,6 +1,6 @@
 "use client";
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import AddToCartBtn from "@/components/Cart/AddToCartBtn";
@@ -13,8 +13,14 @@ export default function PlantCard({
   imageUrl,
   averageRating,
   category,
+  user
 }) {
+  const [userData, setUser] = useState(null);
   const [favorite, setFavorite] = useState(false);
+
+  useEffect(() => {
+    setUser(user);
+  }, []);
 
   function changeFavorite() {
     if (favorite === false) {
@@ -54,30 +60,39 @@ export default function PlantCard({
           </div>
         </Link>
         <div className={styles.card_buttons}>
+
           <AddToCartBtn id={id} name={name} price={price} imageUrl={imageUrl} />
 
+          {user && (
+            <>
+            {favorite ? (
+              <button onClick={changeFavorite} className={styles.favorite}>
+                <Heart className={styles.heart} />
+              </button>
+            ) : (
+              <button onClick={changeFavorite} className={styles.not_favorite}>
+                <Heart className={styles.heart} />
+              </button>
+            )}
+            </>
+          )}
+          </div>
+
+        {user && (
+          <>
           {favorite ? (
-            <button onClick={changeFavorite} className={styles.favorite}>
+            <button onClick={changeFavorite} className={styles.favorite_mobile}>
               <Heart className={styles.heart} />
             </button>
           ) : (
-            <button onClick={changeFavorite} className={styles.not_favorite}>
+            <button
+              onClick={changeFavorite}
+              className={styles.not_favorite_mobile}
+            >
               <Heart className={styles.heart} />
             </button>
           )}
-        </div>
-
-        {favorite ? (
-          <button onClick={changeFavorite} className={styles.favorite_mobile}>
-            <Heart className={styles.heart} />
-          </button>
-        ) : (
-          <button
-            onClick={changeFavorite}
-            className={styles.not_favorite_mobile}
-          >
-            <Heart className={styles.heart} />
-          </button>
+          </>
         )}
       </div>
     </div>

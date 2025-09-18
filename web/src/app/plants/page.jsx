@@ -21,6 +21,7 @@ export default function PlantsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [user, setUser] = useState(null);
 
   const fetchPlants = async (pageNum) => {
     setLoading(true);
@@ -56,6 +57,22 @@ export default function PlantsPage() {
     fetchPlants(page);
     router.replace(`/plants?page=${page}&pageSize=${pageSize}`);
   }, [page]);
+
+   useEffect(() => {
+     async function fetchMe() {
+       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+         credentials: "include",
+       });
+       if (!res.ok) {
+         setUser(null);
+         return;
+       }
+
+       const data = await res.json();
+       setUser(data);
+     }
+     fetchMe();
+   }, []);
 
   const handleFilterChange = (filteredArray, searchTriggered = false) => {
     setFilteredPlants(filteredArray);
@@ -96,6 +113,7 @@ export default function PlantsPage() {
                 imageUrl={plant.plantImage}
                 averageRating={plant.averageRating}
                 category={plant.category}
+                user={user}
               />
             ))
           )}
