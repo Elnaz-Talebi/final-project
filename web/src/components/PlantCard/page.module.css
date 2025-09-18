@@ -7,7 +7,6 @@
   display: flex;
   flex-flow: column;
   gap: 10px;
-  width: 250px;
   height: 500px;
   background-color: white;
   color: #171a1fff;

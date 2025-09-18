@@ -106,11 +106,9 @@
 }
 
 .catalog {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-  flex-wrap: wrap;
   margin: 40px 7%;
 }
 
