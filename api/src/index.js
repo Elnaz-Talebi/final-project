@@ -8,6 +8,7 @@ import usersRouter from "./routers/users.js";
 import cookieParser from "cookie-parser";
 import authenticationsRouter from "./routers/auth.js";
 import questionAnswerRouter from "./routers/questionAnswerRouter.js";
+import favoriteRouter from "./routers/favorite.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use("/reviews", reviewsRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authenticationsRouter);
 app.use("/question-answer", questionAnswerRouter);
+app.use("/favorites", favoriteRouter);
 
 app.get("/", (_req, res) => {
   res.send("API is running...");

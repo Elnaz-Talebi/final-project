@@ -1,0 +1,67 @@
+@font-face{
+    font-family: Lora;
+    src: url("/Lora.ttf");
+}
+
+@font-face{
+    font-family: Inter;
+    src: url("/Inter.ttf");
+}
+
+.main_container{
+    min-height: 70vh;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 0 7%;
+}
+
+.h1{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-family: Lora;
+    color: #48a830ff;
+}
+
+.no_plants{
+    margin-top: 11vh;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.button{
+    background-color: #48a830ff;
+    border: transparent;
+    width: 18vw;
+    height: 8vh;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: Inter;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: rgb(82, 184, 56);
+}
+
+@media (max-width: 768px) {
+    .container{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .button{
+        width: 50vw;
+    }
+}
