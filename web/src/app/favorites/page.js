@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import PlantCard from "@/components/PlantCard/PlantCard";
 import Loading from "@/components/Loading/Loading";
 import Error from "@/components/Error/Error";
+import Link from "next/link";
 
 export default function Favorite() {
   const searchParams = useSearchParams();
@@ -21,12 +22,20 @@ export default function Favorite() {
     setLoading(true);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/plants?page=${pageNum}&pageSize=${pageSize}`
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites` ,{
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // send cookie
+        
+        }
       );
       if (!res.ok) throw new Error("Failed to fetch plants");
       const data = await res.json();
 
-      const formatted = data.plants.map((p) => ({
+  
+        console.log("data:", data);
+
+      const formatted = data.map((p) => ({
         plantId: p.plantId,
         plantName: p.plantName,
         category: p.category,
