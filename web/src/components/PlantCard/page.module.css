@@ -93,21 +93,14 @@
   font-size: 22px;
 }
 
-@media (max-width: 1200px) {
-  .card {
-    width: 25.3vw;
-  }
-
   @media (max-width: 900px) {
     .card {
-      width: 35vw;
       margin-bottom: 20px;
     }
   }
 
   @media (max-width: 768px) {
     .card {
-      width: 85vw;
       flex-direction: column;
       position: relative;
     }
@@ -157,4 +150,3 @@
       font-size: 30px;
     }
   }
-}

@@ -112,11 +112,25 @@
   margin: 40px 7%;
 }
 
+@media (max-width: 1300px) {
+  .catalog{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1050px) {
+  .catalog{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 900px){
   .intro{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding:10px 7%;
   }
 
   .intro_photo{
@@ -125,7 +139,13 @@
   }
 }
 
-@media (max-width: 600px){
+@media (max-width: 850px) {
+  .catalog{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px){
   .intro{
     margin: 0;
     padding: 10px 7%;
@@ -148,11 +168,8 @@
   }
 
   .catalog{
-    flex-direction: column;
+    grid-template-columns: repeat(1, 1fr);
     gap: 0;
-    margin: 20px 7%;
-    justify-content: center;
-    align-items: center;
   }
 
   .button{
