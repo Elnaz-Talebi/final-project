@@ -77,16 +77,16 @@ export default function Favorite() {
     <div className={styles.main_container}>
       <div className={styles.plant_page}>
         <h1 className={styles.h1}>Favorite Plants</h1>
-        <div className={styles.plant_grid}>
-          {filteredPlants.length === 0 ? (
-            <div className={styles.no_plants}>
-              <p>No favorite plants yet</p>
-              <Link href="/plants">
-                <button className={styles.button}>Go to the catalog</button>
-              </Link>
-            </div>
-          ) : (
-            filteredPlants.map((plant) => (
+        {filteredPlants.length === 0 ? (
+          <div className={styles.no_plants}>
+            <p>No favorite plants yet</p>
+            <Link href="/plants">
+              <button className={styles.button}>Go to the catalog</button>
+            </Link>
+          </div>
+        ) : (
+          <div className={styles.plant_grid}>
+            {filteredPlants.map((plant) => (
               <PlantCard
                 key={plant.plantId}
                 id={plant.plantId}
@@ -106,9 +106,9 @@ export default function Favorite() {
                   alert(`${plant.plantName} removed from favorites`);
                 }}
               />
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

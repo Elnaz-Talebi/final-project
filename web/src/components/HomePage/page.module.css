@@ -112,7 +112,7 @@
   margin: 40px 7%;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1320px) {
   .catalog{
     grid-template-columns: repeat(4, 1fr);
   }
