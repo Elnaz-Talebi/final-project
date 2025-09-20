@@ -17,6 +17,23 @@ export default function Favorite() {
   const [filteredPlants, setFilteredPlants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchMe() {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await res.json();
+      setUser(data);
+    }
+    fetchMe();
+  }, []);
 
   const fetchPlants = async (pageNum) => {
     setLoading(true);
