@@ -22,6 +22,7 @@ export default function PlantsPage() {
   const [error, setError] = useState(null);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [user, setUser] = useState(null);
+  const [favoritPlantIds, setFavoritPlantId] = useState([]);
 
   const fetchPlants = async (pageNum) => {
     setLoading(true);
@@ -58,21 +59,51 @@ export default function PlantsPage() {
     router.replace(`/plants?page=${page}&pageSize=${pageSize}`);
   }, [page]);
 
-   useEffect(() => {
-     async function fetchMe() {
-       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-         credentials: "include",
-       });
-       if (!res.ok) {
-         setUser(null);
-         return;
-       }
+  const fetchFavoritePlantIds = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/plantId`,
+        {
+          credentials: "include",
+        }
+      );
+      if (!res.ok) throw new Error("Failed to fetch favorites");
+      const data = await res.json();
 
-       const data = await res.json();
-       setUser(data);
-     }
-     fetchMe();
-   }, []);
+      setFavoritPlantId(data);
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+    }
+  };
+
+  // Fetch user
+  useEffect(() => {
+    async function fetchMe() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+          credentials: "include",
+        });
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+        const data = await res.json();
+        setUser(data);
+      } catch {
+        setUser(null);
+      }
+    }
+    fetchMe();
+  }, []);
+
+  // Only fetch favorites when logged in
+  useEffect(() => {
+    if (!user) {
+      setFavoritPlantId([]);
+      return;
+    }
+    fetchFavoritePlantIds();
+  }, [user]);
 
   const handleFilterChange = (filteredArray, searchTriggered = false) => {
     setFilteredPlants(filteredArray);
@@ -114,6 +145,7 @@ export default function PlantsPage() {
                 averageRating={plant.averageRating}
                 category={plant.category}
                 user={user}
+                initialFavorite={favoritPlantIds.includes(plant.plantId)}
               />
             ))
           )}

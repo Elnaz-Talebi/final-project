@@ -21,19 +21,15 @@ export default function Favorite() {
   const fetchPlants = async (pageNum) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/favorites` ,{
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include", // send cookie
-        
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favorites`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // send cookie
+      });
       if (!res.ok) throw new Error("Failed to fetch plants");
       const data = await res.json();
 
-  
-        console.log("data:", data);
+      console.log("data:", data);
 
       const formatted = data.map((p) => ({
         plantId: p.plantId,
@@ -45,7 +41,7 @@ export default function Favorite() {
         plantImage: p.plantImage,
       }));
 
-  setFilteredPlants(formatted);
+      setFilteredPlants(formatted);
     } catch (err) {
       setError({ message: err?.message || String(err) });
     } finally {
@@ -64,7 +60,7 @@ export default function Favorite() {
     <div className={styles.main_container}>
       <div className={styles.plant_page}>
         <h1 className={styles.h1}>Favorite Plants</h1>
-        <div className={styles.container}>
+        <div className={styles.plant_grid}>
           {filteredPlants.length === 0 ? (
             <div className={styles.no_plants}>
               <p>No favorite plants yet</p>
@@ -83,6 +79,15 @@ export default function Favorite() {
                 imageUrl={plant.plantImage}
                 averageRating={plant.averageRating}
                 category={plant.category}
+                user={true}
+                initialFavorite={true}
+                onRemoveFavorite={(removedPlantId) => {
+                  // remove from favorites list
+                  setFilteredPlants((prev) =>
+                    prev.filter((p) => p.plantId !== removedPlantId)
+                  );
+                  alert(`${plant.plantName} removed from favorites`);
+                }}
               />
             ))
           )}

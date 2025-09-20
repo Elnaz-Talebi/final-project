@@ -15,6 +15,24 @@ export default function HomePage() {
   const [error, setError] = useState(null);
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const [favoritPlantIds, setFavoritPlantId] = useState([]);
+
+  const fetchFavoritePlantIds = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/plantId`,
+        {
+          credentials: "include",
+        }
+      );
+      if (!res.ok) throw new Error("Failed to fetch favorites");
+      const data = await res.json();
+
+      setFavoritPlantId(data);
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+    }
+  };
 
   useEffect(() => {
     async function fetchMe() {
@@ -31,6 +49,14 @@ export default function HomePage() {
     }
     fetchMe();
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setFavoritPlantId([]);
+    } else {
+      fetchFavoritePlantIds();
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchPlants = async () => {
@@ -115,6 +141,7 @@ export default function HomePage() {
                 averageRating={plant.averageRating}
                 category={plant.category}
                 user={user}
+                initialFavorite={favoritPlantIds.includes(plant.plantId)}
               />
             )
           )}
