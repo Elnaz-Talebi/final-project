@@ -112,7 +112,7 @@
 }
 
 /* Optional responsive adjustments */
-@media (max-width: 1300px) {
+@media (max-width: 1320px) {
     .plant_grid {
     grid-template-columns: repeat(4, 1fr);
     }
