@@ -73,11 +73,11 @@ export default function PlantCard({
           )}
           {favorite ? (
             <button onClick={changeFavorite} className={styles.favorite}>
-              <Heart/>
+              <Heart />
             </button>
           ) : (
             <button onClick={changeFavorite} className={styles.not_favorite}>
-              <Heart/>
+              <Heart />
             </button>
           )}
         </div>
