@@ -1,8 +1,9 @@
 "use client";
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import AddToCartBtn from "@/components/Cart/AddToCartBtn";
+import FavoriteButton from "@/components/Favorites/FavoriteButton";
 
 export default function PlantCard({
   id,
@@ -11,9 +12,17 @@ export default function PlantCard({
   price,
   imageUrl,
   averageRating,
+  category,
+  user,
+  initialFavorite,
+  onRemoveFavorite,
 }) {
+  const [userData, setUser] = useState(null);
   const [favorite, setFavorite] = useState(false);
-  const [inCart, addToCart] = useState(false);
+
+  useEffect(() => {
+    setUser(user);
+  }, []);
 
   function changeFavorite() {
     if (favorite === false) {
@@ -23,18 +32,9 @@ export default function PlantCard({
     }
   }
 
-  function changeCart() {
-    if (inCart === false) {
-      addToCart(true);
-    } else {
-      addToCart(false);
-    }
-  }
-
   function renderStars(rating) {
     const stars = [];
     const convertedRating = parseInt(rating, 10);
-    console.log(rating, convertedRating);
     for (let i = 0; i < 5; i++) {
       stars.push(
         <span
@@ -62,23 +62,14 @@ export default function PlantCard({
           </div>
         </Link>
         <div className={styles.card_buttons}>
-          {inCart ? (
-            <button onClick={changeCart} className={styles.in_cart_button}>
-              In Cart
-            </button>
-          ) : (
-            <button onClick={changeCart} className={styles.add_to_cart_button}>
-              Add to Cart
-            </button>
-          )}
-          {favorite ? (
-            <button onClick={changeFavorite} className={styles.favorite}>
-              <Heart />
-            </button>
-          ) : (
-            <button onClick={changeFavorite} className={styles.not_favorite}>
-              <Heart />
-            </button>
+          <AddToCartBtn id={id} name={name} price={price} imageUrl={imageUrl} />
+
+          {user && (
+            <FavoriteButton
+              plantId={id}
+              initialFavorite={initialFavorite}
+              onRemoveFavorite={onRemoveFavorite}
+            />
           )}
         </div>
       </div>

@@ -4,6 +4,7 @@ import Footer from "../components/Footer/Footer";
 import "./globals.css";
 import { Suspense } from "react";
 import Loading from "../components/Loading/Loading";
+import { CartProvider } from "../context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +27,13 @@ export default function RootLayout({ children }) {
       {/*added icon for page*/}
       <link rel="icon" href="./favicon.ico" />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header />
-        <Suspense fallback={<Loading />}>
-          <main>{children}</main>
-        </Suspense>
-        <Footer />
+        <CartProvider>
+          <Header />
+          <Suspense fallback={<Loading />}>
+            <main>{children}</main>
+          </Suspense>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

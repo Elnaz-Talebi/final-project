@@ -9,14 +9,6 @@ export const checkReviewInputsValidation = z.object({
     .int()
     .positive(),
 
-  userId: z
-    .number({
-      required_error: "userId is required",
-      invalid_type_error: "userId must be a number",
-    })
-    .int()
-    .positive(),
-
   rating: z
     .number({
       required_error: "rating is required",

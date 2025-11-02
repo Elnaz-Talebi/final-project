@@ -8,10 +8,10 @@ export const getAllReviewsByPlantId = async (req, res) => {
     if (!plantId || isNaN(plantId) || plantId < 1) {
       return res.status(400).json({ message: "Invalid plantId" });
     }
-    const result = await db("reviews").select("*").where({ plant_id: plantId });
+    const result = await db("reviews").select("*").where({ plant_id: plantId }).orderBy("created_at", "desc");
 
     if (result.length === 0) {
-      return res.status(404).json({ message: "No review found" });
+      return res.json([]); // Return an empty array if no reviews are found
     }
 
     const reviews = result.map((item) => buildReviewDto(item));
@@ -31,10 +31,10 @@ export const addReviewToDatabase = async (req, res) => {
       return res.status(400).json({ errors: parsedInputs.error.errors });
     }
 
-    const { plantId, userId, rating, comment } = parsedInputs.data;
+    const { plantId, rating, comment } = parsedInputs.data;
 
     const [review] = await db("reviews")
-      .insert({ plant_id: plantId, user_id: userId, rating, comment })
+      .insert({ plant_id: plantId, rating, comment })
       .returning("*");
 
     res.status(201).json(buildReviewDto(review));

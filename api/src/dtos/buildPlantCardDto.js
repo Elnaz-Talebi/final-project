@@ -5,4 +5,5 @@ export const buildPlantCardDto = (plant) => ({
   plantPrice: plant.price,
   plantImage: plant.image_url,
   averageRating: plant.avg_rating,
+  category: plant.category,
 });

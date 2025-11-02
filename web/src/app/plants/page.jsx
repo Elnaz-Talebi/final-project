@@ -21,6 +21,8 @@ export default function PlantsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [user, setUser] = useState(null);
+  const [favoritPlantIds, setFavoritPlantId] = useState([]);
 
   const fetchPlants = async (pageNum) => {
     setLoading(true);
@@ -34,8 +36,8 @@ export default function PlantsPage() {
       const formatted = data.plants.map((p) => ({
         plantId: p.plantId,
         plantName: p.plantName,
-        category: "",
-        price: Number(p.plantPrice),
+        category: p.category,
+        price: Number(p.plantPrice || p.price || 0),
         averageRating: p.averageRating,
         plantDescription: p.plantDescription,
         plantImage: p.plantImage,
@@ -56,6 +58,52 @@ export default function PlantsPage() {
     fetchPlants(page);
     router.replace(`/plants?page=${page}&pageSize=${pageSize}`);
   }, [page]);
+
+  const fetchFavoritePlantIds = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/plantId`,
+        {
+          credentials: "include",
+        }
+      );
+      if (!res.ok) throw new Error("Failed to fetch favorites");
+      const data = await res.json();
+
+      setFavoritPlantId(data);
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+    }
+  };
+
+  // Fetch user
+  useEffect(() => {
+    async function fetchMe() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+          credentials: "include",
+        });
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+        const data = await res.json();
+        setUser(data);
+      } catch {
+        setUser(null);
+      }
+    }
+    fetchMe();
+  }, []);
+
+  // Only fetch favorites when logged in
+  useEffect(() => {
+    if (!user) {
+      setFavoritPlantId([]);
+      return;
+    }
+    fetchFavoritePlantIds();
+  }, [user]);
 
   const handleFilterChange = (filteredArray, searchTriggered = false) => {
     setFilteredPlants(filteredArray);
@@ -95,6 +143,9 @@ export default function PlantsPage() {
                 price={plant.price}
                 imageUrl={plant.plantImage}
                 averageRating={plant.averageRating}
+                category={plant.category}
+                user={user}
+                initialFavorite={favoritPlantIds.includes(plant.plantId)}
               />
             ))
           )}

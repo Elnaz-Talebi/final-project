@@ -1,22 +1,21 @@
 "use client";
 import styles from "./page.module.css";
 import Link from "next/link";
-
-//all links are disabled for now
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <div>
+      <div className={styles.navigation}>
         <Link href="/">Home</Link>
         <Link href="/plants">All Plants</Link>
         <Link href="/help">Help</Link>
       </div>
-      <div>
-        <Link href="https://www.facebook.com"><div className={styles.facebook_icon}></div></Link>
-        <Link href="https://x.com"><div className={styles.twitter_icon}></div></Link>
-        <Link href="https://www.instagram.com"><div className={styles.instagram_icon}></div></Link>
-        <Link href="https://www.linkedin.com"><div className={styles.linkedin_icon}></div></Link>
+      <div className={styles.links}>
+        <Link href="https://www.facebook.com"><Facebook className={styles.icon}/></Link>
+        <Link href="https://x.com"><Twitter className={styles.icon}/></Link>
+        <Link href="https://www.instagram.com"><Instagram className={styles.icon}/></Link>
+        <Link href="https://www.linkedin.com"><Linkedin className={styles.icon}/></Link>
       </div>
     </footer>
   );

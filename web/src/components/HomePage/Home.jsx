@@ -14,6 +14,49 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [favoritPlantIds, setFavoritPlantId] = useState([]);
+
+  const fetchFavoritePlantIds = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/favorites/plantId`,
+        {
+          credentials: "include",
+        }
+      );
+      if (!res.ok) throw new Error("Failed to fetch favorites");
+      const data = await res.json();
+
+      setFavoritPlantId(data);
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+    }
+  };
+
+  useEffect(() => {
+    async function fetchMe() {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+        credentials: "include",
+      });
+      if (!res.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await res.json();
+      setUser(data);
+    }
+    fetchMe();
+  }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setFavoritPlantId([]);
+    } else {
+      fetchFavoritePlantIds();
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchPlants = async () => {
@@ -86,18 +129,22 @@ export default function HomePage() {
 
       <div id="catalog">
         <div className={styles.catalog}>
-          {randomPlants.map((plant) => (
-            <PlantCard
-              key={plant.plantId}
-              id={plant.plantId}
-              name={plant.plantName}
-              description={plant.plantDescription}
-              price={plant.price}
-              imageUrl={plant.plantImage}
-              averageRating={plant.averageRating}
-              category={plant.category}
-            />
-          ))}
+          {(filteredPlants.length > 0 ? filteredPlants : randomPlants).map(
+            (plant) => (
+              <PlantCard
+                key={plant.plantId}
+                id={plant.plantId}
+                name={plant.plantName}
+                description={plant.plantDescription}
+                price={plant.price}
+                imageUrl={plant.plantImage || null}
+                averageRating={plant.averageRating}
+                category={plant.category}
+                user={user}
+                initialFavorite={favoritPlantIds.includes(plant.plantId)}
+              />
+            )
+          )}
         </div>
       </div>
     </div>

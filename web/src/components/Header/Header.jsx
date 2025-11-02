@@ -1,20 +1,26 @@
 "use client";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useCart } from "../../context/CartContext";
 import {
   Heart,
   LogOut,
   Plus,
   ShoppingBasket,
   CircleUserRound,
+  Menu,
 } from "lucide-react";
 
 export default function Header() {
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openedNav, setOpenedNav] = useState(false);
   const menuRef = useRef(null);
+  const navRef = useRef(null);
+
+  const { cart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     async function fetchMe() {
@@ -50,6 +56,20 @@ export default function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpenedNav(false);
+      }
+    }
+    if (openedNav) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+  }, [openedNav]);
+
   async function handleLogout() {
     try {
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
@@ -75,64 +95,121 @@ export default function Header() {
         <Link href="/help">Help</Link>
       </nav>
       <div className={styles.header_container}>
-        {/*if we will need this, so you can uncomment this input. I just thought, that it has no sense to have search bar on the header, when we have it on the main page in main section */}
-        {/* <input type="text" placeholder="Search for plants..." className={styles.header_search}/> */}
         {!user && (
-          <Link href="/user/login">
-            <button className={styles.login_button}>Login</button>
-          </Link>
+          <div className={styles.header_container}>
+            <Link href="/cart">
+              <ShoppingBasket
+                className={styles.basket_icon}
+                color="#565d6dff"
+                strokeWidth={1.5}
+              />
+              <span
+                className={`${styles.cartTotalItems} ${
+                  totalItems > 0
+                    ? styles.showTotalItem
+                    : styles.doNotshowCartTotalItems
+                }`}
+              >
+                {totalItems}
+              </span>
+            </Link>
+            <Link href="/user/login">
+              <button className={styles.login_button}>Login</button>
+            </Link>
+          </div>
         )}
         {user && (
           <div className={styles.profile_wrapper} ref={menuRef}>
-            <Link href="/">
-              <ShoppingBasket className={styles.basket_icon} />
+            <Link href="/cart" className={styles.shopping_cart}>
+              <ShoppingBasket
+                className={styles.basket_icon}
+                color="#565d6dff"
+                strokeWidth={1.5}
+              />
+
+              <span
+                className={`${styles.cartTotalItems} ${
+                  totalItems > 0
+                    ? styles.showTotalItem
+                    : styles.doNotshowCartTotalItems
+                }`}
+              >
+                {totalItems}
+              </span>
             </Link>
+            <span className={styles.username}>
+              {user.username || user.email}
+            </span>
             <CircleUserRound
               className={styles.profile_button}
+              color="#565d6dff"
+              strokeWidth={1.5}
               onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={open}
-            >
-              <span className={styles.username}>
-                {user.username || user.email}
-              </span>
-            </CircleUserRound>
+            />
             {open && (
               <div className={styles.dropdown} role="menu">
                 {user.role === "admin" && (
-                  <div className={styles.dropdown_item}>
-                    <Link
-                      href="/plantinsertform"
-                      className={styles.icon_and_text}
-                      onClick={() => setOpen(false)}
-                    >
-                      <Plus size={16} />
-                      Insert Plant
-                    </Link>
-                  </div>
-                )}
-                <div className={styles.dropdown_item}>
                   <Link
+                    href="/plantinsertform"
                     className={styles.icon_and_text}
-                    href="/favorites"
                     onClick={() => setOpen(false)}
                   >
+                    <div className={styles.dropdown_item}>
+                      <Plus size={16} />
+                      Insert Plant
+                    </div>
+                  </Link>
+                )}
+                <Link
+                  className={styles.icon_and_text}
+                  href="/favorites"
+                  onClick={() => setOpen(false)}
+                >
+                  <div className={styles.dropdown_item}>
                     <Heart size={16} />
                     Favorites
-                  </Link>
-                </div>
-                <div className={styles.dropdown_item}>
-                  <Link
-                    href="/"
-                    className={styles.icon_and_text}
-                    onClick={handleLogout}
-                  >
+                  </div>
+                </Link>
+                <Link
+                  href="/"
+                  className={styles.icon_and_text}
+                  onClick={handleLogout}
+                >
+                  <div className={styles.dropdown_item}>
                     <LogOut size={16} />
                     Logout
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               </div>
             )}
+          </div>
+        )}
+        <Menu className={styles.menu} onClick={() => setOpenedNav((v) => !v)} />
+        {openedNav && (
+          <div className={styles.dropdown} ref={navRef}>
+            <Link
+              href="/"
+              className={styles.dropdown_item}
+              onClick={() => setOpenedNav(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/plants"
+              className={styles.dropdown_item}
+              onClick={() => setOpenedNav(false)}
+            >
+              All plants
+            </Link>
+            <Link
+              href="/help"
+              className={styles.dropdown_item}
+              onClick={() => setOpenedNav(false)}
+            >
+              Help
+            </Link>
           </div>
         )}
       </div>

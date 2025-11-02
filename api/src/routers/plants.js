@@ -5,6 +5,7 @@ import {
   getPlantsCardPage,
   getPlantById,
   insertPlantOnlyAdmin,
+  searchPlantsCard,
 } from "../controllers/plantController.js";
 import { adminOnly } from "../middleware/insertPlantAdminOnlyMiddleWare.js";
 
@@ -12,6 +13,9 @@ const plantsRouter = express.Router();
 
 // GET aLL plants card
 plantsRouter.get("/all", getAllPlantsCard);
+
+// GET search plants card
+plantsRouter.get("/search", searchPlantsCard);
 
 // GET plant by id (plant with details)
 plantsRouter.get("/:id", getPlantById);

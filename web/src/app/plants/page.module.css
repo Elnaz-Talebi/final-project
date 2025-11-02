@@ -22,15 +22,14 @@
   font-family: Lora, serif;
   font-size: 45px;
   color: #171a1fff;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   text-align: center;
 }
 
 .plant_grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .error {
@@ -73,11 +72,6 @@
   background-color: #3d8a28ff;
 }
 
-.button:disabled {
-  background-color: #a5a5a5;
-  cursor: not-allowed;
-}
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -118,18 +112,55 @@
 }
 
 /* Optional responsive adjustments */
+@media (max-width: 1320px) {
+    .plant_grid {
+    grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 @media (max-width: 1200px) {
-  .plant_page {
-    padding: 50px 50px;
+  .pagination{
+    margin-top: 60px;
   }
-  .plant_grid {
-    gap: 20px;
-    justify-content: center;
+}
+
+@media (max-width: 1050px) {
+  .plant_grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (max-width: 850px) {
+  .plant_grid{
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .plant_page h1 {
     font-size: 36px;
+    margin-top: -20px;
+  }
+
+  .pagination{
+    margin-top: 40px;
+  }
+
+  .paginationButton{
+    width: 70vw;
+  }
+
+  .pagination span{
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .plant_grid{
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0;
   }
 }
